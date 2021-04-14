@@ -1,0 +1,18 @@
+@import "./reset.css"
+
+.App {
+    -fx-background-color: black-1;
+}
+
+.header__title {
+    -fx-text-fill: green-1;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: inherit;
+}
+
+.header__btn {
+    -fx-text-fill: white-1;
+    -fx-font-size: 15px;
+    -fx-background-color: blue-1;
+}
