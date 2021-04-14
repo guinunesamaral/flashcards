@@ -1,0 +1,24 @@
+@import "./reset.css"
+
+.container {
+    -fx-background-color: black-1;
+}
+
+.register-inputs {
+    -fx-border-radius: 10px;
+    -fx-background-color: grey-1;
+    -fx-background-radius: 10px;
+}
+
+.input {
+    -fx-border-color: black-1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.register-btn {
+    -fx-text-fill: blue-1;
+    -fx-border-color: blue-1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}

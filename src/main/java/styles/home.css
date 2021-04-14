@@ -4,6 +4,10 @@
     -fx-background-color: black-1;
 }
 
+.header {
+
+}
+
 .header__title {
     -fx-text-fill: green-1;
     -fx-font-size: 20px;
@@ -11,8 +15,110 @@
     -fx-background-color: inherit;
 }
 
-.header__btn {
+.settings-btn {
+    -fx-background-color: black-1;
+    -fx-background-image: url("../images/settings-alt.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
+}
+
+.notifications-btn {
+    -fx-background-color: black-1;
+    -fx-background-image: url("../images/bell-alt.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
+}
+
+.exit-btn {
+    -fx-background-color: black-1;
+    -fx-background-image: url("../images/exit-alt.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
+}
+
+.themes__label {
     -fx-text-fill: white-1;
-    -fx-font-size: 15px;
-    -fx-background-color: blue-1;
+    -fx-font-size: 16px;
+    -fx-background-color: inherit;
+}
+
+.flashcards__themes {
+    -fx-background-color: grey-1;
+}
+
+.add-btn {
+    -fx-background-color: grey-1;
+    -fx-background-image: url("../images/add.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
+}
+
+.flashcards-box {
+}
+
+.flashcard {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 150px;
+    -fx-padding: 10px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.flashcard__title {
+    -fx-text-fill: black-1;
+    -fx-font-size: 16px;
+    -fx-background-color: inherit;
+}
+
+.flashcard__description {
+    -fx-text-fill: black-1;
+    -fx-font-size: 16px;
+    -fx-vgap: 30px;
+    -fx-background-color: inherit;
+}
+
+.green-bg {
+    -fx-background-color: green-1;
+}
+
+.red-bg {
+    -fx-background-color: red-1;
+}
+
+.flashcardToolBar {
+    -fx-background-color: green-1;
+}
+
+.flashcard__remove-btn {
+    -fx-pref-width: 30px;
+    -fx-pref-width: 30px;
+    -fx-background-color: inherit;
+    -fx-background-image: url("../images/remove.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
+}
+
+.flashcard__share-btn {
+    -fx-pref-width: 30px;
+    -fx-pref-width: 30px;
+    -fx-background-color: inherit;
+    -fx-background-image: url("../images/share.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
+}
+
+.flashcard__edit-btn {
+    -fx-pref-width: 30px;
+    -fx-pref-width: 30px;
+    -fx-background-color: inherit;
+    -fx-background-image: url("../images/edit.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
 }
