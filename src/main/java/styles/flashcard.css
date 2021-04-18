@@ -1,0 +1,52 @@
+.flashcard {
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-background-color: green-1;
+}
+
+.flashcard__title {
+    -fx-text-fill: black-1;
+    -fx-font-size: 16px;
+    -fx-background-color: inherit;
+}
+
+.flashcard__description {
+    -fx-text-alignment: center;
+    -fx-text-fill: black-1;
+    -fx-font-size: 16px;
+    -fx-vgap: 30px;
+    -fx-background-color: inherit;
+}
+
+.green-bg {
+    -fx-background-color: green-1;
+}
+
+.red-bg {
+    -fx-background-color: red-1;
+}
+
+.flashcard-tool-bar {
+    -fx-background-color: green-1;
+}
+
+.flashcard-btn {
+    -fx-pref-width: 30px;
+    -fx-pref-width: 30px;
+    -fx-background-color: inherit;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain contain;
+}
+
+.flashcard__remove-btn {
+    -fx-background-image: url("../images/remove.png");
+}
+
+.flashcard__share-btn {
+    -fx-background-image: url("../images/share.png");
+}
+
+.flashcard__edit-btn {
+    -fx-background-image: url("../images/edit.png");
+}
