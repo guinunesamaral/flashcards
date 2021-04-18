@@ -14,6 +14,7 @@ public class LoginController extends Controller
     public static final String REGISTER_SCENE_PATH = "./src/main/java/screens/register.fxml";
     public static final String HOME_SCENE_PATH = "./src/main/java/screens/home.fxml";
     public static final String REDEFINE_PASSWORD_SCENE_PATH = "./src/main/java/screens/redefine-password.fxml";
+    
     @FXML
     public Button signInButton;
     @FXML
