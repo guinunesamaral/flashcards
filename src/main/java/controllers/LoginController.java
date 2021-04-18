@@ -2,17 +2,19 @@ package controllers;
 
 import database.DatabaseManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 
 public class LoginController extends Controller
 {
+    public static final String REGISTER_SCENE_PATH = "./src/main/java/screens/register.fxml";
+    public static final String HOME_SCENE_PATH = "./src/main/java/screens/home.fxml";
+    public static final String REDEFINE_PASSWORD_SCENE_PATH = "./src/main/java/screens/redefine-password.fxml";
+    
     @FXML
     public Button signInButton;
     @FXML
@@ -30,39 +32,29 @@ public class LoginController extends Controller
         DatabaseManager dbManager = new DatabaseManager();
         boolean isLoginSuccessful = dbManager.login(emailInput.getText(), passwordInput.getText());
 
-        if (isLoginSuccessful) {
-            try {
-                goToHomeScene(mouseEvent);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                goToRegisterScene(mouseEvent);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            if (isLoginSuccessful) goToHomeScene(mouseEvent);
+            else goToRegisterScene(mouseEvent);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     // This method is called by the validateLogin method, and it's not triggered by the register label
     public void goToRegisterScene(MouseEvent mouseEvent) throws IOException
     {
-        FXMLLoader registerFXML = new FXMLLoader(Paths.get("./src/main/java/fxml/register.fxml").toUri().toURL());
-        switchScene(mouseEvent, registerFXML);
+        switchScene(mouseEvent, REGISTER_SCENE_PATH);
     }
 
     @FXML
     public void goToHomeScene(MouseEvent mouseEvent) throws IOException
     {
-        FXMLLoader homeFXML = new FXMLLoader(Paths.get("./src/main/java/fxml/home.fxml").toUri().toURL());
-        switchScene(mouseEvent, homeFXML);
+        switchScene(mouseEvent, HOME_SCENE_PATH);
     }
 
     @FXML
     public void goToRedefinePasswordScene(MouseEvent mouseEvent) throws IOException
     {
-        FXMLLoader recoverPasswordFXML = new FXMLLoader(Paths.get("./src/main/java/fxml/redefine-password.fxml").toUri().toURL());
-        switchScene(mouseEvent, recoverPasswordFXML);
+        switchScene(mouseEvent, REDEFINE_PASSWORD_SCENE_PATH);
     }
 }

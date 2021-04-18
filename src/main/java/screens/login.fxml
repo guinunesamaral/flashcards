@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="container" stylesheets="@../styles/login.css"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.LoginController">
+    <AnchorPane layoutX="178.0" layoutY="100.0" prefHeight="200.0" prefWidth="245.0" styleClass="options-box">
+        <TextField fx:id="emailInput" layoutX="26.0" layoutY="36.0" prefHeight="28.0" prefWidth="195.0"
+                   promptText="Email">
+            <styleClass>
+                <String fx:value="email-input"/>
+                <String fx:value="input"/>
+            </styleClass>
+        </TextField>
+        <TextField fx:id="passwordInput" layoutX="26.0" layoutY="80.0" prefHeight="25.0" prefWidth="195.0"
+                   promptText="Password">
+            <styleClass>
+                <String fx:value="password-input"/>
+                <String fx:value="input"/>
+            </styleClass>
+        </TextField>
+        <Button fx:id="signInButton" layoutX="26.0" layoutY="127.0" mnemonicParsing="false"
+                onMouseClicked="#validateLogin" styleClass="sign-in-btn" text="Sign In"/>
+        <Label fx:id="lostPasswordLabel" layoutX="125.0" layoutY="132.0" onMouseClicked="#goToRedefinePasswordScene"
+               text="I forgot my password">
+            <styleClass>
+                <String fx:value="lost-password"/>
+                <String fx:value="label"/>
+            </styleClass>
+        </Label>
+        <Label fx:id="registerSceneLabel" layoutX="65.0" layoutY="168.0" onMouseClicked="#goToRegisterScene"
+               text="I don't have an account">
+            <styleClass>
+                <String fx:value="dont-have-account"/>
+                <String fx:value="label"/>
+            </styleClass>
+        </Label>
+    </AnchorPane>
+</AnchorPane>
