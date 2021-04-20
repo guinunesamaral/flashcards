@@ -39,7 +39,7 @@ public class XMLReader
         return ((Element) origin).getElementsByTagName(tagName).item(0).getTextContent();
     }
 
-    public Element getUserRootElements()
+    public Element getRootElements()
     {
         return (Element) this.userDataDocument.getElementsByTagName("user").item(0);
     }

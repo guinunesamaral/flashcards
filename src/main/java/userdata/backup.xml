@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<user>
+    <_id>606f7203499a6f2f240c1f70</_id>
+    <name>Guilherme Nunes</name>
+    <email>guinucode@gmail.com</email>
+    <password>123456</password>
+    <flashcards>
+        <flashcard>
+            <_id>606f7294499a6f2f240c1f71</_id>
+            <title>First flashcard</title>
+            <description>Just a random flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>606f732b499a6f2f240c1f73</_id>
+            <title>Second flashcard</title>
+            <description>Another random flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>6074e57b88a9ac472f16340b</_id>
+            <title>Third flashcard</title>
+            <description>An useless flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>606f7294499a6f2f240c1f76</_id>
+            <title>Fourth flashcard</title>
+            <description>Just a random flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>606f732b499a6f2f240c1f7k</_id>
+            <title>Fifth flashcard</title>
+            <description>Another random flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>6074e57b88a9ac472f16340n</_id>
+            <title>Sixth flashcard</title>
+            <description>An useless flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>606f7294499a6f2f240c1f7d</_id>
+            <title>Seventh flashcard</title>
+            <description>Just a random flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>606f732b499a6f2f240c1f7r</_id>
+            <title>Eighth flashcard</title>
+            <description>Another random flashcard</description>
+        </flashcard>
+        <flashcard>
+            <_id>6074e57b88a9ac472f16340t</_id>
+            <title>Ninth flashcard</title>
+            <description>An useless flashcard</description>
+        </flashcard>
+    </flashcards>
+</user>
