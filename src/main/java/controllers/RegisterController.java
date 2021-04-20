@@ -9,7 +9,6 @@ import java.io.IOException;
 
 public class RegisterController extends Controller
 {
-    public static final String HOME_SCENE_PATH = "./src/main/java/screens/home.fxml";
     public static final String VALID_EMAIL = "";
 
     @FXML

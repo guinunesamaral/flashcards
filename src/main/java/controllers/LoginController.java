@@ -7,14 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-import java.io.IOException;
-
 public class LoginController extends Controller
 {
-    public static final String REGISTER_SCENE_PATH = "./src/main/java/screens/register.fxml";
-    public static final String HOME_SCENE_PATH = "./src/main/java/screens/home.fxml";
-    public static final String REDEFINE_PASSWORD_SCENE_PATH = "./src/main/java/screens/redefine-password.fxml";
-    
     @FXML
     public Button signInButton;
     @FXML
@@ -30,30 +24,30 @@ public class LoginController extends Controller
     public void validateLogin(MouseEvent mouseEvent)
     {
         DatabaseManager dbManager = new DatabaseManager();
+        /*
+        * When the login method is executed it generates a user-data.xml file, which
+        * contains all user data and his flashcards data
+        * */
         boolean isLoginSuccessful = dbManager.login(emailInput.getText(), passwordInput.getText());
 
-        try {
-            if (isLoginSuccessful) goToHomeScene(mouseEvent);
-            else goToRegisterScene(mouseEvent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (isLoginSuccessful) goToHomeScene(mouseEvent);
+        else goToRegisterScene(mouseEvent);
     }
 
     // This method is called by the validateLogin method, and it's not triggered by the register label
-    public void goToRegisterScene(MouseEvent mouseEvent) throws IOException
+    public void goToRegisterScene(MouseEvent mouseEvent)
     {
         switchScene(mouseEvent, REGISTER_SCENE_PATH);
     }
 
     @FXML
-    public void goToHomeScene(MouseEvent mouseEvent) throws IOException
+    public void goToHomeScene(MouseEvent mouseEvent)
     {
         switchScene(mouseEvent, HOME_SCENE_PATH);
     }
 
     @FXML
-    public void goToRedefinePasswordScene(MouseEvent mouseEvent) throws IOException
+    public void goToRedefinePasswordScene(MouseEvent mouseEvent)
     {
         switchScene(mouseEvent, REDEFINE_PASSWORD_SCENE_PATH);
     }
