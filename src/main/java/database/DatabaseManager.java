@@ -9,26 +9,18 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.w3c.dom.Element;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.util.*;
 import java.util.stream.Stream;
 
 public class DatabaseManager
 {
     // This variable establishes connection with mongodb database using user and password
-    public MongoClient client = MongoClients.create("mongodb+srv://admin:ESlZYIXgEj5PJxGZ@cluster0.9zhdc.mongodb.net/flashcards-project?retryWrites=true&w=majority");
+    public static final MongoClient client = MongoClients.create("mongodb+srv://admin:ESlZYIXgEj5PJxGZ@cluster0.9zhdc.mongodb.net/flashcards-project?retryWrites=true&w=majority");
+
     // This is the actual database, who contains all collections
-    public MongoDatabase database = client.getDatabase("flashcards-project");
-    public MongoCollection<Document> usersCollection = database.getCollection("users");
-    public MongoCollection<Document> flashcardsCollection = database.getCollection("flashcards");
+    public static final MongoDatabase database = client.getDatabase("flashcards-project");
+    public static final MongoCollection<Document> usersCollection = database.getCollection("users");
+    public static final MongoCollection<Document> flashcardsCollection = database.getCollection("flashcards");
 
     public void register()
     {
@@ -37,91 +29,59 @@ public class DatabaseManager
 
     public boolean login(String email, String password)
     {
-        Document userDocument = Objects.requireNonNull(usersCollection.find(new Document("email", email)).first());
+        Document userDocument = usersCollection.find(new Document("email", email)).first();
+
+        assert userDocument != null;
         String userId = userDocument.get("_id").toString();
         String userName = userDocument.get("name").toString();
         String userEmail = userDocument.get("email").toString();
-
         /*
-        * The user's flashcards are stored here as an string array
-        * After splitting the initial string, the initial and last elements of the array
-        * will still have the brackets mark, and this is why the replaceAll method is used
-        * */
-        Stream<String> flashcardsIdsList = Arrays.stream(userDocument.get("flashcards")
+         * The user's flashcards are stored here as an string array
+         * After splitting the initial string, the initial and last elements of the array
+         * will still have the brackets mark, and this is why the replaceAll method is used
+         * */
+        Stream<String> flashcardIds = Arrays.stream(userDocument.get("flashcards")
                 .toString()
                 .split(","))
                 .map(flashcardId -> flashcardId.replaceAll("[\\[\\]]", "").trim());
-
         if (userEmail.equals(email)) {
             String userPassword = userDocument.get("password").toString();
             if (userPassword.equals(password)) {
-                storeUserData(userId, userName, userEmail, userPassword, flashcardsIdsList);
+                storeUserData(userId, userName, userEmail, userPassword, flashcardIds);
                 return true;
             }
         }
         return false;
     }
 
-    public void storeUserData(String userId, String userName, String userEmail, String userPassword, Stream<String> flashcardsIdsList)
+    public void storeUserData(String userId, String userName, String userEmail, String userPassword, Stream<String> flashcardIds)
     {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-            org.w3c.dom.Document doc = docBuilder.newDocument();
+        UserDataWriter xmlWriter = new UserDataWriter(UserDataWriter.WriterOptions.CREATE_FILE);
 
-            Element root = doc.createElement("user");
-            doc.appendChild(root);
+        Element root = xmlWriter.createElementWithMultipleValues("user");
+        Element id = xmlWriter.createElementWithSingleValue("_id", userId);
+        Element name = xmlWriter.createElementWithSingleValue("name", userName);
+        Element email = xmlWriter.createElementWithSingleValue("email", userEmail);
+        Element password = xmlWriter.createElementWithSingleValue("password", userPassword);
+        Element flashcards = xmlWriter.createElementWithMultipleValues("flashcards");
 
-            Element idElement = doc.createElement("_id");
-            idElement.appendChild(doc.createTextNode(userId));
-            root.appendChild(idElement);
+        flashcardIds.forEach(idString -> {
+            var flashcardObjectId = new ObjectId(idString);
+            Document flashcardDocument = flashcardsCollection.find(new Document("_id", flashcardObjectId)).first();
 
-            Element nameElement = doc.createElement("name");
-            nameElement.appendChild(doc.createTextNode(userName));
-            root.appendChild(nameElement);
+            assert flashcardDocument != null;
+            String title = flashcardDocument.get("title").toString();
+            String description = flashcardDocument.get("description").toString();
 
-            Element emailElement = doc.createElement("email");
-            emailElement.appendChild(doc.createTextNode(userEmail));
-            root.appendChild(emailElement);
-
-            Element passwordElement = doc.createElement("password");
-            passwordElement.appendChild(doc.createTextNode(userPassword));
-            root.appendChild(passwordElement);
-
-            Element flashcardsElement = doc.createElement("flashcards");
-            root.appendChild(flashcardsElement);
-
-            flashcardsIdsList.forEach(flashcardId -> {
-                var id = new ObjectId(flashcardId);
-                Document flashcardDocument = flashcardsCollection.find(new Document("_id", id)).first();
-
-                String flashcardTitle = Objects.requireNonNull(flashcardDocument).get("title").toString();
-                String flashcardDescription = flashcardDocument.get("description").toString();
-
-                Element flashcard = doc.createElement("flashcard");
-                flashcardsElement.appendChild(flashcard);
-
-                Element title = doc.createElement("title");
-                title.appendChild(doc.createTextNode(flashcardTitle));
-                flashcard.appendChild(title);
-
-                Element description = doc.createElement("description");
-                description.appendChild(doc.createTextNode(flashcardDescription));
-                flashcard.appendChild(description);
-            });
-
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            try {
-                Transformer transformer = transformerFactory.newTransformer();
-                DOMSource source = new DOMSource(doc);
-                StreamResult result = new StreamResult(new File("./src/main/java/database/user-data.xml"));
-                transformer.transform(source, result);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
+            Element flashcard = xmlWriter.createElementWithMultipleValues("flashcard");
+            Element flashcardId = xmlWriter.createElementWithSingleValue("_id", idString);
+            Element flashcardTitle = xmlWriter.createElementWithSingleValue("title", title);
+            Element flashcardDescription = xmlWriter.createElementWithSingleValue("description", description);
+            xmlWriter.appendChildrenToParent(flashcard, flashcardId, flashcardTitle, flashcardDescription);
+            xmlWriter.appendChildToParent(flashcards, flashcard);
+        });
+        xmlWriter.appendChildrenToParent(root, id, name, email, password, flashcards);
+        xmlWriter.appendRootToDocument(root);
     }
 
     public void logout()

@@ -11,7 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 
-public class XMLReader
+public class UserDataReader
 {
     public File userDataXml;
     public DocumentBuilderFactory documentBuilderFactory;
@@ -19,7 +19,7 @@ public class XMLReader
     public Document userDataDocument;
     public Node userDataRootNode;
 
-    public XMLReader(String xmlFilePath, String rootNode)
+    public UserDataReader(String xmlFilePath, String rootNode)
     {
         this.userDataXml = new File(xmlFilePath);
         this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
