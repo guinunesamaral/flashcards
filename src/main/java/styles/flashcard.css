@@ -1,5 +1,14 @@
+@import "./reset.css";
+
+.flashcard-wrapper {
+    -fx-padding: 10px;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+}
+
 .flashcard {
     -fx-border-radius: 3px;
+    -fx-end-margin: 20px;
     -fx-background-radius: 3px;
     -fx-background-color: green-1;
 }
@@ -31,22 +40,26 @@
 }
 
 .flashcard-btn {
-    -fx-pref-width: 30px;
-    -fx-pref-width: 30px;
     -fx-background-color: inherit;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
-    -fx-background-size: contain contain;
+    -fx-background-size: 70%;
 }
 
 .flashcard__remove-btn {
+    -fx-pref-width: 25px;
+    -fx-pref-width: 25px;
     -fx-background-image: url("../images/remove.png");
 }
 
 .flashcard__share-btn {
+    -fx-pref-width: 19px;
+    -fx-pref-width: 23px;
     -fx-background-image: url("../images/share.png");
 }
 
 .flashcard__edit-btn {
+    -fx-pref-width: 23px;
+    -fx-pref-width: 25px;
     -fx-background-image: url("../images/edit.png");
 }
