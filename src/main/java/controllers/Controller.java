@@ -11,12 +11,20 @@ import java.nio.file.Paths;
 
 public class Controller
 {
-    public void switchScene(MouseEvent mouseEvent, String sceneFxmlPath) throws IOException
+    public static final String REGISTER_SCENE_PATH = "./src/main/java/scenes/register.fxml";
+    public static final String HOME_SCENE_PATH = "./src/main/java/scenes/home.fxml";
+    public static final String REDEFINE_PASSWORD_SCENE_PATH = "./src/main/java/scenes/redefine-password.fxml";
+
+    public void switchScene(MouseEvent mouseEvent, String sceneFxmlPath)
     {
-        FXMLLoader sceneFXML = new FXMLLoader(Paths.get(sceneFxmlPath).toUri().toURL());
-        Scene scene = new Scene(sceneFXML.load());
-        Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        try {
+            FXMLLoader sceneFXML = new FXMLLoader(Paths.get(sceneFxmlPath).toUri().toURL());
+            Scene scene = new Scene(sceneFXML.load());
+            Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
