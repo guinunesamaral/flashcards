@@ -1,4 +1,8 @@
-@import "./reset.css"
+@import "./reset.css";
+
+.scroll-bar {
+    -fx-background-color: black-1;
+}
 
 .App {
     -fx-background-color: black-1;
