@@ -2,6 +2,7 @@ package controllers;
 
 import database.UserDataReader;
 import database.UserDataWriter;
+import database.WriterOptions;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,12 +17,10 @@ import org.w3c.dom.Element;
 
 public class FlashcardController extends Controller
 {
-    public static final String USER_DATA_PATH = "./src/main/java/userdata/user-data.xml";
-
     @FXML
     public FlowPane flashcardWrapper;
     @FXML
-    public AnchorPane flashcard;
+    public AnchorPane flashcardAnchorPane;
     @FXML
     public Label flashcardTitle;
     @FXML
@@ -35,47 +34,32 @@ public class FlashcardController extends Controller
     @FXML
     public Button editFlashcardBtn;
 
-    public RotateTransition rotateTransition;
-    public UserDataReader xmlReader;
-    public UserDataWriter xmlWriter;
-    public Element user;
-    public Element flashcards;
-
-    public String flashcardId;
-    public int index;
+    private UserDataReader userDataReader;
+    private Element flashcard;
+    private RotateTransition rotateTransition;
 
     @FXML
     public void initialize()
     {
-        this.xmlReader = new UserDataReader(USER_DATA_PATH, "user");
+        this.userDataReader = new UserDataReader();
         this.rotateTransition = new RotateTransition();
-        this.user = this.xmlReader.getRootElements();
-        this.flashcards = this.xmlReader.getTagElements(this.user, "flashcards", 0);
     }
 
-    public void setIndex(int index)
+    public void setFlashcardProperties(int flashcardIndex)
     {
-        this.index = index;
+        this.flashcardAnchorPane.getStyleClass().addAll("green-bg");
+        this.flashcardAnchorPane.onMouseClickedProperty().set(mouseEvent -> setFlashcardBehaviorOnMouseClicked());
+        setFlashcardComponentsProperties(flashcardIndex);
     }
 
-    public void setFlashcardProperties()
+    public void setFlashcardComponentsProperties(int flashcardIndex)
     {
-        this.flashcard.getStyleClass().addAll("green-bg");
-        this.flashcard.onMouseClickedProperty().set(mouseEvent -> setFlashcardBehaviorOnMouseClicked());
-        setFlashcardComponentsProperties();
-    }
+        Element user = this.userDataReader.getRootElements();
+        Element flashcards = this.userDataReader.getTagElements(user, "flashcards", 0);
+        this.flashcard = this.userDataReader.getTagElements(flashcards, "flashcard", flashcardIndex);
 
-    public void setFlashcardComponentsProperties()
-    {
-        System.out.println(this.index);
-        Element flashcard = this.xmlReader.getTagElements(this.flashcards, "flashcard", this.index);
-        this.flashcardId = this.xmlReader.getTagTextContent(flashcard, "_id");
-
-        String flashcardTitle = this.xmlReader.getTagTextContent(flashcard, "title");
-        String flashcardDescription = this.xmlReader.getTagTextContent(flashcard, "description");
-
-        setTitleProperties(flashcardTitle);
-        setDescriptionProperties(flashcardDescription);
+        setTitleProperties(this.userDataReader.getTagTextContent(this.flashcard, "title"));
+        setDescriptionProperties(this.userDataReader.getTagTextContent(this.flashcard, "description"));
         setRotateProperties();
     }
 
@@ -95,7 +79,7 @@ public class FlashcardController extends Controller
         this.rotateTransition.setDuration(Duration.millis(1000));
         this.rotateTransition.setAxis(Rotate.Y_AXIS);
         this.rotateTransition.setCycleCount(1);
-        this.rotateTransition.setNode(flashcard);
+        this.rotateTransition.setNode(flashcardAnchorPane);
     }
 
     public void setFlashcardBehaviorOnMouseClicked()
@@ -110,21 +94,22 @@ public class FlashcardController extends Controller
             this.flashcardDescription.visibleProperty().set(false);
             this.flashcardToolBar.visibleProperty().set(true);
         }
-        if (this.flashcard.getStyleClass().contains("green-bg")) {
-            this.flashcard.getStyleClass().remove("green-bg");
-            this.flashcard.getStyleClass().add("red-bg");
+        if (this.flashcardAnchorPane.getStyleClass().contains("green-bg")) {
+            this.flashcardAnchorPane.getStyleClass().remove("green-bg");
+            this.flashcardAnchorPane.getStyleClass().add("red-bg");
         } else {
-            this.flashcard.getStyleClass().remove("red-bg");
-            this.flashcard.getStyleClass().add("green-bg");
+            this.flashcardAnchorPane.getStyleClass().remove("red-bg");
+            this.flashcardAnchorPane.getStyleClass().add("green-bg");
         }
     }
 
     public void removeFlashcard(MouseEvent mouseEvent)
     {
-        this.xmlWriter = new UserDataWriter(UserDataWriter.WriterOptions.USE_EXISTING_FILE);
+        UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.USE_EXISTING_FILE);
+        String flashcardId = this.userDataReader.getTagTextContent(this.flashcard, "_id");
         // This action removes the flashcard from the user-data file
-        this.xmlWriter.removeFlashcard(this.flashcardId);
-        switchScene(mouseEvent, HOME_SCENE_PATH);
+        userDataWriter.removeFlashcard(flashcardId);
+        switchScene(mouseEvent, HOME_SCENE);
     }
 
     public void shareFlashcard(MouseEvent mouseEvent)

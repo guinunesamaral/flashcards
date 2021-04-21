@@ -21,3 +21,25 @@
 .btn {
     -fx-cursor: hand;
 }
+
+.close-btn {
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-background-color: grey-1;
+    -fx-background-image: url("../images/close-alt.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 65%;
+}
+
+.options-box {
+    -fx-border-radius: 10px;
+    -fx-background-color: grey-1;
+    -fx-background-radius: 4px;
+}
+
+.input {
+    -fx-border-color: black-1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}

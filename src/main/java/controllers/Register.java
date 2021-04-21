@@ -24,7 +24,7 @@ public class RegisterController extends Controller
 
     public void goToHomeScene(MouseEvent mouseEvent) throws IOException
     {
-        switchScene(mouseEvent, HOME_SCENE_PATH);
+        switchScene(mouseEvent, HOME_SCENE);
     }
 
     public void validateRegistration(MouseEvent mouseEvent)

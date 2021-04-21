@@ -1,0 +1,12 @@
+@import "./reset.css";
+
+.container {
+    -fx-background-color: black-1;
+}
+
+.share-flashcard-btn {
+    -fx-text-fill: blue-1;
+    -fx-border-color: blue-1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}

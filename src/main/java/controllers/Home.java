@@ -17,8 +17,6 @@ import java.nio.file.Paths;
 
 public class HomeController extends Controller
 {
-    public static final String NOTIFICATIONS_SCENE_PATH = "./src/main/java/scenes/notifications.fxml";
-    public static final String USER_DATA_PATH = "./src/main/java/userdata/user-data.xml";
     public static final String FLASHCARD_PATH = "./src/main/java/components/flashcard.fxml";
 
     @FXML
@@ -34,21 +32,19 @@ public class HomeController extends Controller
     @FXML
     public FlowPane flashcardBox;
 
-    public UserDataReader xmlReader;
-    public String userId;
+    private UserDataReader xmlReader;
 
     @FXML
     public void initialize()
     {
-        this.xmlReader = new UserDataReader(USER_DATA_PATH, "user");
-        this.userId = this.xmlReader.getTagTextContent(this.xmlReader.userDataRootNode, "_id");
+        this.xmlReader = new UserDataReader();
         addFlashcards();
     }
 
     @FXML
     public void goToNotificationsScene(MouseEvent mouseEvent)
     {
-        switchScene(mouseEvent, NOTIFICATIONS_SCENE_PATH);
+        switchScene(mouseEvent, NOTIFICATIONS_SCENE);
     }
 
     @FXML
@@ -62,14 +58,13 @@ public class HomeController extends Controller
     {
         Element flashcards = (Element) this.xmlReader.userDataDocument.getElementsByTagName("flashcards").item(0);
         int flashcardListLength = flashcards.getElementsByTagName("flashcard").getLength();
-        for (int index = 0; index < flashcardListLength; index++) {
+        for (int flashcardId = 0; flashcardId < flashcardListLength; flashcardId++) {
             FlowPane flashcardFxml = null;
             try {
                 FXMLLoader loader = new FXMLLoader(Paths.get(FLASHCARD_PATH).toUri().toURL());
                 flashcardFxml = loader.load();
                 FlashcardController flashcardController = loader.getController();
-                flashcardController.setIndex(index);
-                flashcardController.setFlashcardProperties();
+                flashcardController.setFlashcardProperties(flashcardId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
