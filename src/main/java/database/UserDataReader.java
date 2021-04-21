@@ -13,35 +13,34 @@ import java.io.IOException;
 
 public class UserDataReader
 {
-    public File userDataXml;
-    public DocumentBuilderFactory documentBuilderFactory;
-    public DocumentBuilder documentBuilder;
+    public static final String USER_DATA = "./src/main/java/userdata/user-data.xml";
+
     public Document userDataDocument;
     public Node userDataRootNode;
 
-    public UserDataReader(String xmlFilePath, String rootNode)
+    public UserDataReader()
     {
-        this.userDataXml = new File(xmlFilePath);
-        this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        File userDataXml = new File(USER_DATA);
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
-            this.documentBuilder= this.documentBuilderFactory.newDocumentBuilder();
-            this.userDataDocument = this.documentBuilder.parse(this.userDataXml);
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            this.userDataDocument = documentBuilder.parse(userDataXml);
             this.userDataDocument.getDocumentElement().normalize();
 
-            this.userDataRootNode = this.userDataDocument.getElementsByTagName(rootNode).item(0);
+            this.userDataRootNode = this.userDataDocument.getElementsByTagName("user").item(0);
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String getTagTextContent(Node origin, String tagName)
-    {
-        return ((Element) origin).getElementsByTagName(tagName).item(0).getTextContent();
-    }
-
     public Element getRootElements()
     {
         return (Element) this.userDataDocument.getElementsByTagName("user").item(0);
+    }
+
+    public String getTagTextContent(Node origin, String tagName)
+    {
+        return ((Element) origin).getElementsByTagName(tagName).item(0).getTextContent();
     }
 
     public Element getTagElements(Node origin, String tagName, int index)

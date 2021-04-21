@@ -20,11 +20,6 @@ public class UserDataWriter
     public Document newDocument;
     public Document existingDocument;
 
-    public enum WriterOptions
-    {
-        CREATE_FILE, USE_EXISTING_FILE
-    }
-
     public UserDataWriter(WriterOptions option)
     {
         if (option == WriterOptions.CREATE_FILE) {
@@ -47,30 +42,6 @@ public class UserDataWriter
         }
     }
 
-    public void appendChildrenToParent(Element parent, Element... children)
-    {
-        for (Element child : children) {
-            parent.appendChild(child);
-        }
-    }
-
-    public void appendChildToParent(Element parent, Element child)
-    {
-        parent.appendChild(child);
-    }
-
-    public Element createElementWithSingleValue(String elementName, String elementValue)
-    {
-        Element child = this.newDocument.createElement(elementName);
-        child.appendChild(this.newDocument.createTextNode(elementValue));
-        return child;
-    }
-
-    public Element createElementWithMultipleValues(String elementName)
-    {
-        return this.newDocument.createElement(elementName);
-    }
-
     public void appendRootToDocument(Element root)
     {
         try {
@@ -86,25 +57,81 @@ public class UserDataWriter
         }
     }
 
-    public void removeFlashcard(String flashcardId)
+    public void appendChildrenToParent(Element parent, Element... children)
     {
-        Element flashcards = (Element) this.existingDocument.getElementsByTagName("flashcards").item(0);
+        for (Element child : children) {
+            parent.appendChild(child);
+        }
+    }
+
+    public void appendChildToParent(Element parent, Element child)
+    {
+        parent.appendChild(child);
+    }
+
+    public Element createElement(String elementName)
+    {
+        return this.newDocument.createElement(elementName);
+    }
+
+    public Element createElementWithChild(String elementName, String elementValue)
+    {
+        Element child = this.newDocument.createElement(elementName);
+        child.appendChild(this.newDocument.createTextNode(elementValue));
+        return child;
+    }
+
+    public Element findFlashcard(Element flashcards, String flashcardId)
+    {
         Element flashcard = null;
 
         int numberOfFlashcards = flashcards.getElementsByTagName("flashcard").getLength();
-        boolean found = false;
+        boolean flashcardFound = false;
         int index = 0;
 
-        while (!found && index < numberOfFlashcards) {
+        while (!flashcardFound && index < numberOfFlashcards) {
             flashcard = (Element) flashcards.getElementsByTagName("flashcard").item(index);
             String id = flashcard.getElementsByTagName("_id").item(0).getTextContent();
             if (id.equals(flashcardId)) {
-                found = true;
+                flashcardFound = true;
             }
             index += 1;
         }
+        return flashcard;
+    }
+
+    public void removeFlashcard(String flashcardId)
+    {
+        Element flashcards = (Element) this.existingDocument.getElementsByTagName("flashcards").item(0);
+        Element flashcard = findFlashcard(flashcards, flashcardId);
         if (flashcard != null) {
             flashcards.removeChild(flashcard);
+            try {
+                Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                DOMSource source = new DOMSource(this.existingDocument);
+                StreamResult result = new StreamResult(new File(USER_DATA_PATH));
+                transformer.transform(source, result);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void updateFlashcard(String flashcardId, String flashcardTitle, String flashcardDescription)
+    {
+        Element flashcards = (Element) this.existingDocument.getElementsByTagName("flashcards").item(0);
+        Element flashcard = findFlashcard(flashcards, flashcardId);
+        boolean flashcardChanged = false;
+
+        if (!flashcardTitle.equals("")) {
+            flashcard.getElementsByTagName("title").item(0).setTextContent(flashcardTitle);
+            flashcardChanged = true;
+        }
+        if (!flashcardDescription.equals("")) {
+            flashcard.getElementsByTagName("description").item(0).setTextContent(flashcardDescription);
+            flashcardChanged = true;
+        }
+        if (flashcardChanged) {
             try {
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
                 DOMSource source = new DOMSource(this.existingDocument);

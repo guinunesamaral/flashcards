@@ -12,24 +12,33 @@ import org.w3c.dom.Element;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class DatabaseManager
+public class Database
 {
+    private static Database database;
+
+    private final String mongoDBConnectionString = "mongodb+srv://admin:ESlZYIXgEj5PJxGZ@cluster0.9zhdc.mongodb.net/flashcards-project?retryWrites=true&w=majority";
     // This variable establishes connection with mongodb database using user and password
-    public static final MongoClient client = MongoClients.create("mongodb+srv://admin:ESlZYIXgEj5PJxGZ@cluster0.9zhdc.mongodb.net/flashcards-project?retryWrites=true&w=majority");
-
+    private final MongoClient client = MongoClients.create(mongoDBConnectionString);
     // This is the actual database, who contains all collections
-    public static final MongoDatabase database = client.getDatabase("flashcards-project");
-    public static final MongoCollection<Document> usersCollection = database.getCollection("users");
-    public static final MongoCollection<Document> flashcardsCollection = database.getCollection("flashcards");
+    private final MongoDatabase mongoDatabase = client.getDatabase("flashcards-project");
+    private final MongoCollection<Document> usersCollection = mongoDatabase.getCollection("users");
+    private final MongoCollection<Document> flashcardsCollection = mongoDatabase.getCollection("flashcards");
 
-    public void register()
+    private Database()
     {
+    }
 
+    public static Database getInstance()
+    {
+        if (database == null) {
+            database = new Database();
+        }
+        return database;
     }
 
     public boolean login(String email, String password)
     {
-        Document userDocument = usersCollection.find(new Document("email", email)).first();
+        Document userDocument = this.usersCollection.find(new Document("email", email)).first();
 
         assert userDocument != null;
         String userId = userDocument.get("_id").toString();
@@ -56,32 +65,37 @@ public class DatabaseManager
 
     public void storeUserData(String userId, String userName, String userEmail, String userPassword, Stream<String> flashcardIds)
     {
-        UserDataWriter xmlWriter = new UserDataWriter(UserDataWriter.WriterOptions.CREATE_FILE);
+        UserDataWriter xmlWriter = new UserDataWriter(WriterOptions.CREATE_FILE);
 
-        Element root = xmlWriter.createElementWithMultipleValues("user");
-        Element id = xmlWriter.createElementWithSingleValue("_id", userId);
-        Element name = xmlWriter.createElementWithSingleValue("name", userName);
-        Element email = xmlWriter.createElementWithSingleValue("email", userEmail);
-        Element password = xmlWriter.createElementWithSingleValue("password", userPassword);
-        Element flashcards = xmlWriter.createElementWithMultipleValues("flashcards");
+        Element root = xmlWriter.createElement("user");
+        Element id = xmlWriter.createElementWithChild("_id", userId);
+        Element name = xmlWriter.createElementWithChild("name", userName);
+        Element email = xmlWriter.createElementWithChild("email", userEmail);
+        Element password = xmlWriter.createElementWithChild("password", userPassword);
+        Element flashcards = xmlWriter.createElement("flashcards");
 
         flashcardIds.forEach(idString -> {
             var flashcardObjectId = new ObjectId(idString);
-            Document flashcardDocument = flashcardsCollection.find(new Document("_id", flashcardObjectId)).first();
+            Document flashcardDocument = this.flashcardsCollection.find(new Document("_id", flashcardObjectId)).first();
 
             assert flashcardDocument != null;
             String title = flashcardDocument.get("title").toString();
             String description = flashcardDocument.get("description").toString();
 
-            Element flashcard = xmlWriter.createElementWithMultipleValues("flashcard");
-            Element flashcardId = xmlWriter.createElementWithSingleValue("_id", idString);
-            Element flashcardTitle = xmlWriter.createElementWithSingleValue("title", title);
-            Element flashcardDescription = xmlWriter.createElementWithSingleValue("description", description);
+            Element flashcard = xmlWriter.createElement("flashcard");
+            Element flashcardId = xmlWriter.createElementWithChild("_id", idString);
+            Element flashcardTitle = xmlWriter.createElementWithChild("title", title);
+            Element flashcardDescription = xmlWriter.createElementWithChild("description", description);
             xmlWriter.appendChildrenToParent(flashcard, flashcardId, flashcardTitle, flashcardDescription);
             xmlWriter.appendChildToParent(flashcards, flashcard);
         });
         xmlWriter.appendChildrenToParent(root, id, name, email, password, flashcards);
         xmlWriter.appendRootToDocument(root);
+    }
+
+    public void register()
+    {
+
     }
 
     public void logout()
