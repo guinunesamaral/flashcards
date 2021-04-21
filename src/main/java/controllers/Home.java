@@ -15,29 +15,21 @@ import org.w3c.dom.Element;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class HomeController extends Controller
+public class Home extends Controller
 {
     public static final String FLASHCARD_PATH = "./src/main/java/components/flashcard.fxml";
 
-    @FXML
-    public AnchorPane App;
-    @FXML
-    public AnchorPane header;
-    @FXML
-    public Button notificationsBtn;
-    @FXML
-    public Button exitBtn;
     @FXML
     public ChoiceBox flashcardsThemes;
     @FXML
     public FlowPane flashcardBox;
 
-    private UserDataReader xmlReader;
+    private UserDataReader userDataReader;
 
     @FXML
     public void initialize()
     {
-        this.xmlReader = new UserDataReader();
+        this.userDataReader = new UserDataReader();
         addFlashcards();
     }
 
@@ -56,15 +48,15 @@ public class HomeController extends Controller
 
     public void addFlashcards()
     {
-        Element flashcards = (Element) this.xmlReader.userDataDocument.getElementsByTagName("flashcards").item(0);
+        Element flashcards = (Element) this.userDataReader.userDataDocument.getElementsByTagName("flashcards").item(0);
         int flashcardListLength = flashcards.getElementsByTagName("flashcard").getLength();
-        for (int flashcardId = 0; flashcardId < flashcardListLength; flashcardId++) {
+        for (int flashcardIndex = 0; flashcardIndex < flashcardListLength; flashcardIndex++) {
             FlowPane flashcardFxml = null;
             try {
                 FXMLLoader loader = new FXMLLoader(Paths.get(FLASHCARD_PATH).toUri().toURL());
                 flashcardFxml = loader.load();
-                FlashcardController flashcardController = loader.getController();
-                flashcardController.setFlashcardProperties(flashcardId);
+                Flashcard flashcardController = loader.getController();
+                flashcardController.setFlashcardProperties(flashcardIndex);
             } catch (IOException e) {
                 e.printStackTrace();
             }

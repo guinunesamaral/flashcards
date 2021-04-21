@@ -1,5 +1,5 @@
 package controllers;
 
-public class RedefinePasswordController
+public class RedefinePassword
 {
 }

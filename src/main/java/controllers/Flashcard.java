@@ -5,37 +5,33 @@ import database.UserDataWriter;
 import database.WriterOptions;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import org.w3c.dom.Element;
 
-public class FlashcardController extends Controller
+import java.io.IOException;
+import java.nio.file.Paths;
+
+public class Flashcard extends Controller
 {
     @FXML
     public FlowPane flashcardWrapper;
     @FXML
-    public AnchorPane flashcardAnchorPane;
+    public Pane flashcardAnchorPane;
     @FXML
     public Label flashcardTitle;
     @FXML
     public Label flashcardDescription;
     @FXML
-    public ToolBar flashcardToolBar;
-    @FXML
-    public Button removeFlashcardBtn;
-    @FXML
-    public Button shareFlashcardBtn;
-    @FXML
-    public Button editFlashcardBtn;
+    public Pane flashcardToolBar;
 
     private UserDataReader userDataReader;
-    private Element flashcard;
+    private String flashcardId;
     private RotateTransition rotateTransition;
 
     @FXML
@@ -48,7 +44,7 @@ public class FlashcardController extends Controller
     public void setFlashcardProperties(int flashcardIndex)
     {
         this.flashcardAnchorPane.getStyleClass().addAll("green-bg");
-        this.flashcardAnchorPane.onMouseClickedProperty().set(mouseEvent -> setFlashcardBehaviorOnMouseClicked());
+        this.flashcardAnchorPane.onMouseClickedProperty().set(mouseEvent -> setFlashcardBehaviorOnMouseClick());
         setFlashcardComponentsProperties(flashcardIndex);
     }
 
@@ -56,10 +52,11 @@ public class FlashcardController extends Controller
     {
         Element user = this.userDataReader.getRootElements();
         Element flashcards = this.userDataReader.getTagElements(user, "flashcards", 0);
-        this.flashcard = this.userDataReader.getTagElements(flashcards, "flashcard", flashcardIndex);
+        Element flashcard = this.userDataReader.getTagElements(flashcards, "flashcard", flashcardIndex);
+        this.flashcardId = this.userDataReader.getTagTextContent(flashcard, "_id");
 
-        setTitleProperties(this.userDataReader.getTagTextContent(this.flashcard, "title"));
-        setDescriptionProperties(this.userDataReader.getTagTextContent(this.flashcard, "description"));
+        setTitleProperties(this.userDataReader.getTagTextContent(flashcard, "title"));
+        setDescriptionProperties(this.userDataReader.getTagTextContent(flashcard, "description"));
         setRotateProperties();
     }
 
@@ -82,7 +79,7 @@ public class FlashcardController extends Controller
         this.rotateTransition.setNode(flashcardAnchorPane);
     }
 
-    public void setFlashcardBehaviorOnMouseClicked()
+    public void setFlashcardBehaviorOnMouseClick()
     {
         this.rotateTransition.play();
         if (this.flashcardTitle.visibleProperty().get()) {
@@ -103,20 +100,32 @@ public class FlashcardController extends Controller
         }
     }
 
+    @FXML
     public void removeFlashcard(MouseEvent mouseEvent)
     {
         UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.USE_EXISTING_FILE);
-        String flashcardId = this.userDataReader.getTagTextContent(this.flashcard, "_id");
         // This action removes the flashcard from the user-data file
-        userDataWriter.removeFlashcard(flashcardId);
+        userDataWriter.removeFlashcard(this.flashcardId);
         switchScene(mouseEvent, HOME_SCENE);
     }
 
+    @FXML
     public void shareFlashcard(MouseEvent mouseEvent)
     {
+        switchScene(mouseEvent, SHARE_FLASHCARD);
     }
 
-    public void editFlashcard(MouseEvent mouseEvent)
+    @FXML
+    public void updateFlashcard(MouseEvent mouseEvent)
     {
+        try {
+            FXMLLoader loader = new FXMLLoader(Paths.get(UPDATE_FLASHCARD).toUri().toURL());
+            loader.load();
+            UpdateFlashcard updateFlashcardController = loader.getController();
+            updateFlashcardController.setFlashcardId(this.flashcardId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switchScene(mouseEvent, UPDATE_FLASHCARD);
     }
 }
