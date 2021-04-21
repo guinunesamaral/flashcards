@@ -8,8 +8,14 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="container" stylesheets="@../styles/login.css"
             xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.LoginController">
+            fx:controller="controllers.Login">
     <AnchorPane layoutX="178.0" layoutY="100.0" prefHeight="200.0" prefWidth="245.0" styleClass="options-box">
+        <Button layoutX="218.0" mnemonicParsing="false" onMouseClicked="#exitApp">
+            <styleClass>
+                <String fx:value="close-btn" />
+                <String fx:value="btn" />
+            </styleClass>
+        </Button>
         <TextField fx:id="emailInput" layoutX="26.0" layoutY="36.0" prefHeight="28.0" prefWidth="195.0"
                    promptText="Email">
             <styleClass>
@@ -24,16 +30,16 @@
                 <String fx:value="input"/>
             </styleClass>
         </TextField>
-        <Button fx:id="signInButton" layoutX="26.0" layoutY="127.0" mnemonicParsing="false"
+        <Button layoutX="26.0" layoutY="127.0" mnemonicParsing="false"
                 onMouseClicked="#validateLogin" styleClass="sign-in-btn" text="Sign In"/>
-        <Label fx:id="lostPasswordLabel" layoutX="125.0" layoutY="132.0" onMouseClicked="#goToRedefinePasswordScene"
+        <Label layoutX="125.0" layoutY="132.0" onMouseClicked="#goToRedefinePasswordScene"
                text="I forgot my password">
             <styleClass>
                 <String fx:value="lost-password"/>
                 <String fx:value="label"/>
             </styleClass>
         </Label>
-        <Label fx:id="registerSceneLabel" layoutX="65.0" layoutY="168.0" onMouseClicked="#goToRegisterScene"
+        <Label layoutX="65.0" layoutY="168.0" onMouseClicked="#goToRegisterScene"
                text="I don't have an account">
             <styleClass>
                 <String fx:value="dont-have-account"/>

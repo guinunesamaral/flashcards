@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="container" stylesheets="@../styles/share-flashcard.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ShareFlashcard">
+    <AnchorPane layoutX="177.0" layoutY="130.0" prefHeight="139.0" prefWidth="245.0" styleClass="options-box">
+        <AnchorPane layoutX="-1.0" layoutY="14.0" prefHeight="87.0" prefWidth="245.0" styleClass="content-box">
+            <Label layoutX="25.0" layoutY="14.0" text="Share flashcard with:">
+                <styleClass>
+                    <String fx:value="label" />
+                </styleClass>
+            </Label>
+            <TextField fx:id="emailInput" layoutX="25.0" layoutY="38.0" prefHeight="28.0" prefWidth="195.0" promptText="example@email.com">
+                <styleClass>
+                    <String fx:value="email-input" />
+                    <String fx:value="input" />
+                </styleClass>
+            </TextField>
+        </AnchorPane>
+        <Button layoutX="100.0" layoutY="101.0" mnemonicParsing="false" onMouseClicked="#shareFlashcard" text="Share">
+            <styleClass>
+                <String fx:value="share-flashcard-btn" />
+                <String fx:value="btn" />
+            </styleClass>
+        </Button>
+    </AnchorPane>
+</AnchorPane>
