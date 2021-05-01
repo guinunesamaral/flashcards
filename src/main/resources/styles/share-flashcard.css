@@ -1,0 +1,5 @@
+@import "./reset.css";
+
+.share-flashcard-btn {
+    -fx-background-color: blue-1;
+}

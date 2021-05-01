@@ -1,14 +1,10 @@
 package controllers;
 
-import database.XMLReader;
-import javafx.fxml.FXML;
+import database.UserDataReader;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Element;
@@ -18,64 +14,50 @@ import java.nio.file.Paths;
 
 public class HomeController extends Controller
 {
-    public static final String NOTIFICATIONS_SCENE_PATH = "./src/main/java/screens/notifications.fxml";
-    public static final String USER_DATA_PATH = "./src/main/java/database/user-data.xml";
-    public static final String FLASHCARD_PATH = "./src/main/java/components/flashcard.fxml";
-
-    @FXML
-    public AnchorPane header;
-    @FXML
-    public Button notificationsBtn;
-    @FXML
-    public Button exitBtn;
-    @FXML
-    public ChoiceBox flashcardsThemes;
-    @FXML
+    public static final String FLASHCARD_PATH = "./src/main/resources/components/flashcard.fxml";
+    public Label scoreValue;
     public FlowPane flashcardBox;
 
-    public XMLReader xmlReader;
-    public String userId;
-
-    @FXML
     public void initialize()
     {
-        setFlashcardBoxProperties();
-        this.xmlReader = new XMLReader(USER_DATA_PATH, "user");
-        this.userId = this.xmlReader.getTagTextContent(this.xmlReader.userDataRootNode, "_id");
-        addFlashcards();
+        fetchFlashcards();
     }
 
-    @FXML
-    public void goToNotificationsScene(MouseEvent mouseEvent) throws IOException
+    public void goToNotificationsScene(MouseEvent mouseEvent)
     {
-        switchScene(mouseEvent, NOTIFICATIONS_SCENE_PATH);
+        switchScene(mouseEvent, NOTIFICATIONS_SCENE);
     }
 
-    @FXML
-    public void exitApplication(MouseEvent mouseEvent)
+    public void signOut(MouseEvent mouseEvent)
     {
-        Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        window.close();
+        switchScene(mouseEvent, SIGN_IN_SCENE);
     }
 
-    public void setFlashcardBoxProperties()
+    public void fetchFlashcards()
     {
-        this.flashcardBox.setHgap(25);
-        this.flashcardBox.setAlignment(Pos.TOP_CENTER);
-    }
-
-    public void addFlashcards()
-    {
-        try {
-            Element userElement = (Element) this.xmlReader.userDataDocument.getElementsByTagName("user").item(0);
-            Element flashcardsElements = (Element) userElement.getElementsByTagName("flashcards").item(0);
-            int flashcardListLength = flashcardsElements.getElementsByTagName("flashcard").getLength();
-            for (int i = 0; i < flashcardListLength; i++) {
-                AnchorPane flashcard = FXMLLoader.load(Paths.get(FLASHCARD_PATH).toUri().toURL());
-                flashcardBox.getChildren().add(flashcard);
+        UserDataReader userDataReader = new UserDataReader();
+        Element flashcards = (Element) userDataReader.userDataDocument.getElementsByTagName("flashcards").item(0);
+        int flashcardListLength = flashcards.getElementsByTagName("flashcard").getLength();
+        for (int flashcardIndex = 0; flashcardIndex < flashcardListLength; flashcardIndex++) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Paths.get(FLASHCARD_PATH).toUri().toURL());
+                FlowPane flashcardFxml = loader.load();
+                FlashcardController flashcardController = loader.getController();
+                flashcardController.setFlashcardProperties(flashcardIndex);
+                this.flashcardBox.getChildren().add(flashcardFxml);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+
+    public void addFlashcard()
+    {
+        openScene(ADD_FLASHCARD_SCENE);
+    }
+
+    public void study()
+    {
+        openScene(STUDY_SCENE);
     }
 }

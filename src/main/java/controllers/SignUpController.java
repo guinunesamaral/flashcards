@@ -7,9 +7,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class RegisterController extends Controller
+public class SignUpController extends Controller
 {
-    public static final String HOME_SCENE_PATH = "./src/main/java/screens/home.fxml";
     public static final String VALID_EMAIL = "";
 
     @FXML
@@ -20,12 +19,10 @@ public class RegisterController extends Controller
     public TextField emailInput;
     @FXML
     public TextField confirmPasswordInput;
-    @FXML
-    public Button registerBtn;
 
     public void goToHomeScene(MouseEvent mouseEvent) throws IOException
     {
-        switchScene(mouseEvent, HOME_SCENE_PATH);
+        switchScene(mouseEvent, HOME_SCENE);
     }
 
     public void validateRegistration(MouseEvent mouseEvent)

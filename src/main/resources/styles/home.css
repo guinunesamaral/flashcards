@@ -1,48 +1,38 @@
-@import "./reset.css"
+@import "./reset.css";
 
 .App {
     -fx-background-color: black-1;
 }
 
+.study-btn {
+    -fx-text-fill: black-1;
+}
+
 .btn {
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
-    -fx-background-size: contain contain;
-}
-
-.header__title {
-    -fx-text-fill: green-1;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-background-color: inherit;
 }
 
 .settings-btn {
     -fx-background-color: black-1;
     -fx-background-image: url("../images/settings-alt.png");
+    -fx-background-size: 100%;
 }
 
 .notifications-btn {
     -fx-background-color: black-1;
     -fx-background-image: url("../images/bell-alt.png");
+    -fx-background-size: 90%;
 }
 
-.exit-btn {
+.sign-out-btn {
     -fx-background-color: black-1;
     -fx-background-image: url("../images/exit-alt.png");
-}
-
-.themes__label {
-    -fx-text-fill: white-1;
-    -fx-font-size: 16px;
-    -fx-background-color: inherit;
-}
-
-.flashcards__themes {
-    -fx-background-color: grey-1;
+    -fx-background-size: 80%;
 }
 
 .add-flashcard-btn {
     -fx-background-color: grey-1;
     -fx-background-image: url("../images/add.png");
+    -fx-background-size: 70%;
 }

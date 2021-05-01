@@ -1,0 +1,52 @@
+.root {
+    green-1: #2ED85D;
+    blue-1: #000AFF;
+    red-1: #FF0000;
+    white-1: #FFFFFF;
+    grey-1: #C7C3C3;
+    black-1: #000000;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
+    src: local("sample"), url("https://fonts.googleapis.com/css2?family=Roboto&display=swap") format("trutype");
+}
+
+* {
+    -fx-font-family: "Roboto"
+}
+
+.container {
+    -fx-background-color: black-1;
+}
+
+.options-box {
+    -fx-background-color: inherit;
+}
+
+.label {
+    -fx-text-fill: white-1;
+    -fx-font-size: 16;
+}
+
+.header-title {
+    -fx-text-fill: green-1;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: inherit;
+}
+
+.input {
+    -fx-font-size: 16;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 300px;
+}
+
+.btn {
+    -fx-cursor: hand;
+    -fx-font-size: 16;
+    -fx-text-fill: white-1;
+    -fx-pref-height: 35px;
+}
