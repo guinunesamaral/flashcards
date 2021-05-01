@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class RegisterController extends Controller
+public class SignUpController extends Controller
 {
     public static final String VALID_EMAIL = "";
 

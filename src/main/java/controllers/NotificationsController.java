@@ -1,5 +1,5 @@
 package controllers;
 
-public class Notifications
+public class NotificationsController
 {
 }

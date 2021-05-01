@@ -3,6 +3,7 @@ package controllers;
 import database.UserDataReader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -11,14 +12,15 @@ import org.w3c.dom.Element;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class Home extends Controller
+public class HomeController extends Controller
 {
-    public static final String FLASHCARD_PATH = "./src/main/java/components/flashcard.fxml";
+    public static final String FLASHCARD_PATH = "./src/main/resources/components/flashcard.fxml";
+    public Label scoreValue;
     public FlowPane flashcardBox;
 
     public void initialize()
     {
-        addFlashcards();
+        fetchFlashcards();
     }
 
     public void goToNotificationsScene(MouseEvent mouseEvent)
@@ -26,13 +28,12 @@ public class Home extends Controller
         switchScene(mouseEvent, NOTIFICATIONS_SCENE);
     }
 
-    public void exitApplication(MouseEvent mouseEvent)
+    public void signOut(MouseEvent mouseEvent)
     {
-        Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        window.close();
+        switchScene(mouseEvent, SIGN_IN_SCENE);
     }
 
-    public void addFlashcards()
+    public void fetchFlashcards()
     {
         UserDataReader userDataReader = new UserDataReader();
         Element flashcards = (Element) userDataReader.userDataDocument.getElementsByTagName("flashcards").item(0);
@@ -41,12 +42,22 @@ public class Home extends Controller
             try {
                 FXMLLoader loader = new FXMLLoader(Paths.get(FLASHCARD_PATH).toUri().toURL());
                 FlowPane flashcardFxml = loader.load();
-                Flashcard flashcardController = loader.getController();
+                FlashcardController flashcardController = loader.getController();
                 flashcardController.setFlashcardProperties(flashcardIndex);
                 this.flashcardBox.getChildren().add(flashcardFxml);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void addFlashcard()
+    {
+        openScene(ADD_FLASHCARD_SCENE);
+    }
+
+    public void study()
+    {
+        openScene(STUDY_SCENE);
     }
 }

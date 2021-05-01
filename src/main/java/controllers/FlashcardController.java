@@ -12,7 +12,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import org.w3c.dom.Element;
 
-public class Flashcard extends Controller
+public class FlashcardController extends Controller
 {
     public FlowPane flashcardWrapper;
     public Pane flashcardAnchorPane;
@@ -96,15 +96,15 @@ public class Flashcard extends Controller
         switchScene(mouseEvent, HOME_SCENE);
     }
 
-    public void shareFlashcard(MouseEvent mouseEvent)
+    public void openFlashcardScene()
     {
-        switchScene(mouseEvent, SHARE_FLASHCARD);
+        openScene(SHARE_FLASHCARD_SCENE);
     }
 
-    public void goToUpdateFlashcardScene(MouseEvent mouseEvent)
+    public void openUpdateFlashcardScene()
     {
         UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.USE_EXISTING_FILE);
         userDataWriter.setFlashcardId(this.flashcardId);
-        switchScene(mouseEvent, UPDATE_FLASHCARD);
+        openScene(UPDATE_FLASHCARD_SCENE);
     }
 }
