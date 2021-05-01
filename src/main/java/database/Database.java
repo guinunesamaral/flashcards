@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 public class Database
 {
+    // The singleton object for the database class
     private static Database database;
 
     private final String mongoDBConnectionString = "mongodb+srv://admin:ESlZYIXgEj5PJxGZ@cluster0.9zhdc.mongodb.net/flashcards-project?retryWrites=true&w=majority";
@@ -65,14 +66,14 @@ public class Database
 
     public void storeUserData(String userId, String userName, String userEmail, String userPassword, Stream<String> flashcardIds)
     {
-        UserDataWriter xmlWriter = new UserDataWriter(WriterOptions.CREATE_FILE);
+        UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.CREATE_FILE);
 
-        Element root = xmlWriter.createElement("user");
-        Element id = xmlWriter.createElementWithChild("_id", userId);
-        Element name = xmlWriter.createElementWithChild("name", userName);
-        Element email = xmlWriter.createElementWithChild("email", userEmail);
-        Element password = xmlWriter.createElementWithChild("password", userPassword);
-        Element flashcards = xmlWriter.createElement("flashcards");
+        Element root = userDataWriter.createElement("user");
+        Element id = userDataWriter.createElement("_id", userId);
+        Element name = userDataWriter.createElement("name", userName);
+        Element email = userDataWriter.createElement("email", userEmail);
+        Element password = userDataWriter.createElement("password", userPassword);
+        Element flashcards = userDataWriter.createElement("flashcards");
 
         flashcardIds.forEach(idString -> {
             var flashcardObjectId = new ObjectId(idString);
@@ -82,15 +83,15 @@ public class Database
             String title = flashcardDocument.get("title").toString();
             String description = flashcardDocument.get("description").toString();
 
-            Element flashcard = xmlWriter.createElement("flashcard");
-            Element flashcardId = xmlWriter.createElementWithChild("_id", idString);
-            Element flashcardTitle = xmlWriter.createElementWithChild("title", title);
-            Element flashcardDescription = xmlWriter.createElementWithChild("description", description);
-            xmlWriter.appendChildrenToParent(flashcard, flashcardId, flashcardTitle, flashcardDescription);
-            xmlWriter.appendChildToParent(flashcards, flashcard);
+            Element flashcard = userDataWriter.createElement("flashcard");
+            Element flashcardId = userDataWriter.createElement("_id", idString);
+            Element flashcardTitle = userDataWriter.createElement("title", title);
+            Element flashcardDescription = userDataWriter.createElement("description", description);
+            userDataWriter.appendChildrenToParent(flashcard, flashcardId, flashcardTitle, flashcardDescription);
+            userDataWriter.appendChildToParent(flashcards, flashcard);
         });
-        xmlWriter.appendChildrenToParent(root, id, name, email, password, flashcards);
-        xmlWriter.appendRootToDocument(root);
+        userDataWriter.appendChildrenToParent(root, id, name, email, password, flashcards);
+        userDataWriter.appendRootToDocument(root);
     }
 
     public void register()
