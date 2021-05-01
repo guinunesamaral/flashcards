@@ -13,12 +13,16 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
+/*
+* TODO: When I add or remove an item from the user-data file, it gets a messy.
+*  I need to find a way to automatically format it
+* */
+
 public class UserDataWriter
 {
-    public static final String USER_DATA_PATH = "./src/main/java/userdata/user-data.xml";
-
-    public Document newDocument;
-    public Document existingDocument;
+    public static final String USER_DATA = "./src/main/java/userdata/user-data.xml";
+    public Document userDataDocument;
+    private static String flashcardId;
 
     public UserDataWriter(WriterOptions option)
     {
@@ -27,7 +31,7 @@ public class UserDataWriter
             DocumentBuilder docBuilder;
             try {
                 docBuilder = dbf.newDocumentBuilder();
-                this.newDocument = docBuilder.newDocument();
+                this.userDataDocument = docBuilder.newDocument();
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -35,7 +39,7 @@ public class UserDataWriter
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             try {
                 DocumentBuilder builder = factory.newDocumentBuilder();
-                this.existingDocument = builder.parse(USER_DATA_PATH);
+                this.userDataDocument = builder.parse(USER_DATA);
             } catch (SAXException | IOException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -45,12 +49,12 @@ public class UserDataWriter
     public void appendRootToDocument(Element root)
     {
         try {
-            this.newDocument.appendChild(root);
+            this.userDataDocument.appendChild(root);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(this.newDocument);
-            StreamResult result = new StreamResult(new File(USER_DATA_PATH));
+            DOMSource source = new DOMSource(this.userDataDocument);
+            StreamResult result = new StreamResult(new File(USER_DATA));
             transformer.transform(source, result);
         } catch (TransformerException e) {
             e.printStackTrace();
@@ -71,14 +75,19 @@ public class UserDataWriter
 
     public Element createElement(String elementName)
     {
-        return this.newDocument.createElement(elementName);
+        return this.userDataDocument.createElement(elementName);
     }
 
-    public Element createElementWithChild(String elementName, String elementValue)
+    public Element createElement(String elementName, String elementValue)
     {
-        Element child = this.newDocument.createElement(elementName);
-        child.appendChild(this.newDocument.createTextNode(elementValue));
+        Element child = this.userDataDocument.createElement(elementName);
+        child.appendChild(this.userDataDocument.createTextNode(elementValue));
         return child;
+    }
+
+    public void setFlashcardId(String flashcardId)
+    {
+        UserDataWriter.flashcardId = flashcardId;
     }
 
     public Element findFlashcard(Element flashcards, String flashcardId)
@@ -100,46 +109,53 @@ public class UserDataWriter
         return flashcard;
     }
 
+    public void addFlashcard(Element flashcard, Element id, Element title, Element description)
+    {
+        appendChildrenToParent(flashcard, id, title, description);
+        this.userDataDocument.getElementsByTagName("flashcards").item(0).appendChild(flashcard);
+        updateUserDataFile();
+    }
+
     public void removeFlashcard(String flashcardId)
     {
-        Element flashcards = (Element) this.existingDocument.getElementsByTagName("flashcards").item(0);
+        Element flashcards = (Element) this.userDataDocument.getElementsByTagName("flashcards").item(0);
         Element flashcard = findFlashcard(flashcards, flashcardId);
         if (flashcard != null) {
             flashcards.removeChild(flashcard);
-            try {
-                Transformer transformer = TransformerFactory.newInstance().newTransformer();
-                DOMSource source = new DOMSource(this.existingDocument);
-                StreamResult result = new StreamResult(new File(USER_DATA_PATH));
-                transformer.transform(source, result);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
+            updateUserDataFile();
         }
     }
 
-    public void updateFlashcard(String flashcardId, String flashcardTitle, String flashcardDescription)
+    public void updateFlashcard(String flashcardTitle, String flashcardDescription)
     {
-        Element flashcards = (Element) this.existingDocument.getElementsByTagName("flashcards").item(0);
+        Element flashcards = (Element) this.userDataDocument.getElementsByTagName("flashcards").item(0);
         Element flashcard = findFlashcard(flashcards, flashcardId);
         boolean flashcardChanged = false;
 
-        if (!flashcardTitle.equals("")) {
-            flashcard.getElementsByTagName("title").item(0).setTextContent(flashcardTitle);
-            flashcardChanged = true;
-        }
-        if (!flashcardDescription.equals("")) {
-            flashcard.getElementsByTagName("description").item(0).setTextContent(flashcardDescription);
-            flashcardChanged = true;
+        if (flashcard != null) {
+            if (!flashcardTitle.equals("")) {
+                flashcard.getElementsByTagName("title").item(0).setTextContent(flashcardTitle);
+                flashcardChanged = true;
+            }
+            if (!flashcardDescription.equals("")) {
+                flashcard.getElementsByTagName("description").item(0).setTextContent(flashcardDescription);
+                flashcardChanged = true;
+            }
         }
         if (flashcardChanged) {
-            try {
-                Transformer transformer = TransformerFactory.newInstance().newTransformer();
-                DOMSource source = new DOMSource(this.existingDocument);
-                StreamResult result = new StreamResult(new File(USER_DATA_PATH));
-                transformer.transform(source, result);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
+            updateUserDataFile();
+        }
+    }
+
+    private void updateUserDataFile()
+    {
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            DOMSource source = new DOMSource(this.userDataDocument);
+            StreamResult result = new StreamResult(new File(USER_DATA));
+            transformer.transform(source, result);
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
 }
