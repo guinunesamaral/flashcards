@@ -1,0 +1,12 @@
+@import "./reset.css";
+
+.text-area {
+    -fx-font-size: 16;
+}
+
+.update-btn {
+    -fx-background-color: blue-1;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 65%;
+}

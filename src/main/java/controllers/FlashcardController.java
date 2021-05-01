@@ -4,8 +4,6 @@ import database.UserDataReader;
 import database.UserDataWriter;
 import database.WriterOptions;
 import javafx.animation.RotateTransition;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -14,27 +12,17 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import org.w3c.dom.Element;
 
-import java.io.IOException;
-import java.nio.file.Paths;
-
 public class Flashcard extends Controller
 {
-    @FXML
     public FlowPane flashcardWrapper;
-    @FXML
     public Pane flashcardAnchorPane;
-    @FXML
     public Label flashcardTitle;
-    @FXML
     public Label flashcardDescription;
-    @FXML
     public Pane flashcardToolBar;
-
     private UserDataReader userDataReader;
     private String flashcardId;
     private RotateTransition rotateTransition;
 
-    @FXML
     public void initialize()
     {
         this.userDataReader = new UserDataReader();
@@ -100,7 +88,6 @@ public class Flashcard extends Controller
         }
     }
 
-    @FXML
     public void removeFlashcard(MouseEvent mouseEvent)
     {
         UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.USE_EXISTING_FILE);
@@ -109,23 +96,15 @@ public class Flashcard extends Controller
         switchScene(mouseEvent, HOME_SCENE);
     }
 
-    @FXML
     public void shareFlashcard(MouseEvent mouseEvent)
     {
         switchScene(mouseEvent, SHARE_FLASHCARD);
     }
 
-    @FXML
-    public void updateFlashcard(MouseEvent mouseEvent)
+    public void goToUpdateFlashcardScene(MouseEvent mouseEvent)
     {
-        try {
-            FXMLLoader loader = new FXMLLoader(Paths.get(UPDATE_FLASHCARD).toUri().toURL());
-            loader.load();
-            UpdateFlashcard updateFlashcardController = loader.getController();
-            updateFlashcardController.setFlashcardId(this.flashcardId);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.USE_EXISTING_FILE);
+        userDataWriter.setFlashcardId(this.flashcardId);
         switchScene(mouseEvent, UPDATE_FLASHCARD);
     }
 }

@@ -1,13 +1,9 @@
 package controllers;
 
 import database.UserDataReader;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Element;
@@ -18,28 +14,18 @@ import java.nio.file.Paths;
 public class Home extends Controller
 {
     public static final String FLASHCARD_PATH = "./src/main/java/components/flashcard.fxml";
-
-    @FXML
-    public ChoiceBox flashcardsThemes;
-    @FXML
     public FlowPane flashcardBox;
 
-    private UserDataReader userDataReader;
-
-    @FXML
     public void initialize()
     {
-        this.userDataReader = new UserDataReader();
         addFlashcards();
     }
 
-    @FXML
     public void goToNotificationsScene(MouseEvent mouseEvent)
     {
         switchScene(mouseEvent, NOTIFICATIONS_SCENE);
     }
 
-    @FXML
     public void exitApplication(MouseEvent mouseEvent)
     {
         Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
@@ -48,19 +34,19 @@ public class Home extends Controller
 
     public void addFlashcards()
     {
-        Element flashcards = (Element) this.userDataReader.userDataDocument.getElementsByTagName("flashcards").item(0);
+        UserDataReader userDataReader = new UserDataReader();
+        Element flashcards = (Element) userDataReader.userDataDocument.getElementsByTagName("flashcards").item(0);
         int flashcardListLength = flashcards.getElementsByTagName("flashcard").getLength();
         for (int flashcardIndex = 0; flashcardIndex < flashcardListLength; flashcardIndex++) {
-            FlowPane flashcardFxml = null;
             try {
                 FXMLLoader loader = new FXMLLoader(Paths.get(FLASHCARD_PATH).toUri().toURL());
-                flashcardFxml = loader.load();
+                FlowPane flashcardFxml = loader.load();
                 Flashcard flashcardController = loader.getController();
                 flashcardController.setFlashcardProperties(flashcardIndex);
+                this.flashcardBox.getChildren().add(flashcardFxml);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            this.flashcardBox.getChildren().add(flashcardFxml);
         }
     }
 }

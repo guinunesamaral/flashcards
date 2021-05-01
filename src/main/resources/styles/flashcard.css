@@ -46,20 +46,20 @@
     -fx-background-size: 85%;
 }
 
-.flashcard__remove-btn {
+.remove-btn {
     -fx-pref-width: 26px;
     -fx-pref-height: 26px;
     -fx-background-image: url("../images/remove.png");
     -fx-background-size: 85%;
 }
 
-.flashcard__share-btn {
+.share-btn {
     -fx-pref-width: 23px;
     -fx-pref-height: 23px;
     -fx-background-image: url("../images/share.png");
 }
 
-.flashcard__update-btn {
+.update-btn {
     -fx-pref-width: 23px;
     -fx-pref-height: 23px;
     -fx-background-image: url("../images/edit.png");
