@@ -1,0 +1,17 @@
+@import "./reset.css";
+
+.sign-in-btn {
+    -fx-background-color: blue-1;
+}
+
+.forgot-password-btn {
+    -fx-font-size: 14px;
+    -fx-pref-height: 30px;
+    -fx-background-color: red-1;
+}
+
+.sign-up-btn {
+    -fx-font-size: 14px;
+    -fx-pref-height: 30px;
+    -fx-background-color: red-1;
+}
