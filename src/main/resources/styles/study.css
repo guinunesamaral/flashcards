@@ -1,13 +1,40 @@
 @import "./reset.css";
 
-.flashcard-description {
-    -fx-text-fill: green-1;
+.flashcard {
+    -fx-background-radius: 3px;
+    -fx-background-color: white-1;
 }
 
-.wrong-btn {
+.flashcard-front {
+    -fx-text-fill: black-1;
+}
+
+.front-bg {
+    -fx-background-color: white-1;
+}
+
+.back-bg {
+    -fx-background-color: black-1;
+}
+
+.flashcard-back {
+    -fx-text-fill: white-1;
+}
+
+.prev-btn, .next-btn {
+    -fx-fill: white-1;
+    -fx-stroke: white-1;
+}
+
+.hard-btn {
     -fx-background-color: red-1;
 }
 
-.correct-btn {
+.easy-btn {
     -fx-background-color: blue-1;
+}
+
+.show-btn {
+    -fx-text-fill: black-1;
+    -fx-background-color: green-1;
 }

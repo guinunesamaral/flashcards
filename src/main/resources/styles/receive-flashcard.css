@@ -1,0 +1,14 @@
+@import "./flashcard.css";
+
+.flashcard {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.accept-btn {
+    -fx-background-color: blue-1;
+}
+
+.refuse-btn {
+    -fx-background-color: red-1;
+}

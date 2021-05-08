@@ -16,12 +16,12 @@
         </Label>
     </AnchorPane>
     <AnchorPane layoutX="29.0" layoutY="80.0" prefHeight="306.0" prefWidth="351.0" styleClass="options-box">
-        <TextField fx:id="titleInput" layoutX="26.0" layoutY="39.0" prefHeight="28.0" prefWidth="195.0">
+        <TextField fx:id="frontInput" layoutX="26.0" layoutY="39.0" prefHeight="28.0" prefWidth="195.0">
             <styleClass>
                 <String fx:value="input" />
             </styleClass>
         </TextField>
-        <TextArea fx:id="descriptionInput" layoutX="26.0" layoutY="117.0" prefHeight="124.0" prefWidth="300.0">
+        <TextArea fx:id="backInput" layoutX="26.0" layoutY="117.0" prefHeight="124.0" prefWidth="300.0">
             <styleClass>
                 <String fx:value="text-area" />
             </styleClass>
@@ -32,7 +32,7 @@
                 <String fx:value="btn" />
             </styleClass>
         </Button>
-      <Label layoutX="26.0" layoutY="14.0" text="New title:" />
-      <Label layoutX="26.0" layoutY="92.0" text="New description:" />
+      <Label layoutX="26.0" layoutY="14.0" text="Front:" />
+      <Label layoutX="26.0" layoutY="92.0" text="Back:" />
     </AnchorPane>
 </AnchorPane>

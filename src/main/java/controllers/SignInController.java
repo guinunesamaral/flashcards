@@ -5,6 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/*
+* TODO: when the user enter wrong data, I must show a message of correction, instead of
+*  just break the application
+* */
+
 public class SignInController extends Controller
 {
     public TextField emailInput;
@@ -17,7 +22,7 @@ public class SignInController extends Controller
         * When the login method is executed it generates a user-data.xml file, which
         * contains all user data and his flashcards data
         * */
-        boolean isLoginSuccessful = dbManager.login(emailInput.getText(), passwordInput.getText());
+        boolean isLoginSuccessful = dbManager.signIn(emailInput.getText(), passwordInput.getText());
         if (isLoginSuccessful) goToHomeScene(mouseEvent);
     }
 
