@@ -4,8 +4,9 @@
     -fx-background-color: black-1;
 }
 
-.study-btn {
+.study-btn, .sort-flashcard-btn {
     -fx-text-fill: black-1;
+    -fx-background-color: grey-1;
 }
 
 .btn {
@@ -15,13 +16,19 @@
 
 .settings-btn {
     -fx-background-color: black-1;
-    -fx-background-image: url("../images/settings-alt.png");
+    -fx-background-image: url("../images/settings.png");
     -fx-background-size: 100%;
 }
 
-.notifications-btn {
+.notifications-btn-normal {
     -fx-background-color: black-1;
-    -fx-background-image: url("../images/bell-alt.png");
+    -fx-background-image: url("../images/bell.png");
+    -fx-background-size: 90%;
+}
+
+.notifications-btn-notification {
+    -fx-background-color: black-1;
+    -fx-background-image: url("../images/bell-notification.png");
     -fx-background-size: 90%;
 }
 
@@ -29,6 +36,10 @@
     -fx-background-color: black-1;
     -fx-background-image: url("../images/exit-alt.png");
     -fx-background-size: 80%;
+}
+
+.refresh-btn {
+    -fx-background-color: grey-1;
 }
 
 .add-flashcard-btn {

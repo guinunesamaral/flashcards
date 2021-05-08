@@ -3,3 +3,11 @@
 .share-flashcard-btn {
     -fx-background-color: blue-1;
 }
+
+.text-red {
+    -fx-text-fill: red-1;
+}
+
+.text-black {
+    -fx-text-fill: black-1;
+}

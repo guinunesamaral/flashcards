@@ -10,33 +10,33 @@
     -fx-border-radius: 3px;
     -fx-end-margin: 20px;
     -fx-background-radius: 3px;
-    -fx-background-color: green-1;
+    -fx-background-color: grey-1;
 }
 
-.flashcard__title {
+.flashcard-front {
     -fx-text-fill: black-1;
     -fx-font-size: 16px;
     -fx-background-color: inherit;
 }
 
-.flashcard__description {
+.flashcard-back {
     -fx-text-alignment: center;
-    -fx-text-fill: black-1;
+    -fx-text-fill: white-1;
     -fx-font-size: 16px;
     -fx-vgap: 30px;
     -fx-background-color: inherit;
 }
 
-.green-bg {
-    -fx-background-color: green-1;
+.front-bg {
+    -fx-background-color: grey-1;
 }
 
-.red-bg {
-    -fx-background-color: red-1;
+.back-bg {
+    -fx-background-color: black-1;
 }
 
 .flashcard-tool-bar {
-    -fx-background-color: green-1;
+    -fx-background-color: inherit;
 }
 
 .flashcard-btn {

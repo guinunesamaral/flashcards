@@ -32,7 +32,7 @@
 }
 
 .header-title {
-    -fx-text-fill: green-1;
+    -fx-text-fill: grey-1;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-background-color: inherit;
