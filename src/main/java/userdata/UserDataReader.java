@@ -18,6 +18,8 @@ public class UserDataReader
     public static final String USER_DATA = "./src/main/java/userdata/user-data.xml";
     public Document userDataDocument;
     public Node userDataRootNode;
+    public ArrayList<Flashcard> flashcards;
+    private static String flashcardId;
 
     public UserDataReader()
     {
@@ -44,23 +46,28 @@ public class UserDataReader
         return ((Element) origin).getElementsByTagName(tagName).item(0).getTextContent();
     }
 
-    public Element getTagElements(Node origin, String tagName, int index)
+    public Element getTagElements(String tagName, int index)
     {
-        return (Element) ((Element) origin).getElementsByTagName(tagName).item(index);
+        return (Element) this.userDataDocument.getElementsByTagName(tagName).item(index);
     }
 
-    public ArrayList<Flashcard> getFlashcards()
+    public void setFlashcards()
     {
-        ArrayList<Flashcard> flashcards = new ArrayList<>();
-        Element flashcardsElement = getTagElements(this.userDataRootNode, "flashcards", 0);
+        this.flashcards = new ArrayList<>();
+        Element flashcardsElement = getTagElements( "flashcards", 0);
         int numberOfFlashcards = flashcardsElement.getElementsByTagName("flashcard").getLength();
 
         for (int index = 0; index < numberOfFlashcards; index++)
         {
-            Element flashcard = getTagElements(flashcardsElement, "flashcard", index);
-            String description = getTagElements(flashcard, "description", 0).getTextContent();
-            flashcards.add(new Flashcard(description));
+            String id = getTagElements("_id", index).getTextContent();
+            String front = getTagElements("front", index).getTextContent();
+            String back = getTagElements("back", index).getTextContent();
+            flashcards.add(new Flashcard(id, front, back, index));
         }
-        return flashcards;
+    }
+
+    public Flashcard findFlashcard(int index)
+    {
+        return this.flashcards.get(index);
     }
 }

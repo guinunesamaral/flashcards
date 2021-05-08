@@ -22,7 +22,6 @@ public class UserDataWriter
 {
     public static final String USER_DATA = "./src/main/java/userdata/user-data.xml";
     public Document userDataDocument;
-    private static String flashcardId;
 
     public UserDataWriter(WriterOptions option)
     {
@@ -85,30 +84,6 @@ public class UserDataWriter
         return child;
     }
 
-    public void setFlashcardId(String flashcardId)
-    {
-        UserDataWriter.flashcardId = flashcardId;
-    }
-
-    public Element findFlashcard(Element flashcards, String flashcardId)
-    {
-        Element flashcard = null;
-
-        int numberOfFlashcards = flashcards.getElementsByTagName("flashcard").getLength();
-        boolean flashcardFound = false;
-        int index = 0;
-
-        while (!flashcardFound && index < numberOfFlashcards) {
-            flashcard = (Element) flashcards.getElementsByTagName("flashcard").item(index);
-            String id = flashcard.getElementsByTagName("_id").item(0).getTextContent();
-            if (id.equals(flashcardId)) {
-                flashcardFound = true;
-            }
-            index += 1;
-        }
-        return flashcard;
-    }
-
     public void addFlashcard(Element flashcard, Element id, Element title, Element description)
     {
         appendChildrenToParent(flashcard, id, title, description);
@@ -119,26 +94,28 @@ public class UserDataWriter
     public void removeFlashcard(String flashcardId)
     {
         Element flashcards = (Element) this.userDataDocument.getElementsByTagName("flashcards").item(0);
-        Element flashcard = findFlashcard(flashcards, flashcardId);
+        UserDataReader userDataReader = new UserDataReader();
+        Element flashcard = userDataReader.findFlashcard(flashcards, flashcardId);
         if (flashcard != null) {
             flashcards.removeChild(flashcard);
             updateUserDataFile();
         }
     }
 
-    public void updateFlashcard(String flashcardTitle, String flashcardDescription)
+    public void updateFlashcard(String flashcardFront, String flashcardBack)
     {
         Element flashcards = (Element) this.userDataDocument.getElementsByTagName("flashcards").item(0);
-        Element flashcard = findFlashcard(flashcards, flashcardId);
+        UserDataReader userDataReader = new UserDataReader();
+        Element flashcard = userDataReader.findFlashcard(flashcards, userDataReader.getFlashcardId());
         boolean flashcardChanged = false;
 
         if (flashcard != null) {
-            if (!flashcardTitle.equals("")) {
-                flashcard.getElementsByTagName("title").item(0).setTextContent(flashcardTitle);
+            if (!flashcardFront.equals("")) {
+                flashcard.getElementsByTagName("front").item(0).setTextContent(flashcardFront);
                 flashcardChanged = true;
             }
-            if (!flashcardDescription.equals("")) {
-                flashcard.getElementsByTagName("description").item(0).setTextContent(flashcardDescription);
+            if (!flashcardBack.equals("")) {
+                flashcard.getElementsByTagName("back").item(0).setTextContent(flashcardBack);
                 flashcardChanged = true;
             }
         }
