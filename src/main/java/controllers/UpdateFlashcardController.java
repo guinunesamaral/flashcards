@@ -1,24 +1,37 @@
 package controllers;
 
-import database.UserDataWriter;
-import database.WriterOptions;
+import database.Database;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import utilities.Flashcard;
+import utilities.User;
 
 public class UpdateFlashcardController extends Controller
 {
-    public TextField titleInput;
-    public TextArea descriptionInput;
+    public TextField frontInput;
+    public TextArea backInput;
+    public User user;
+    public static int flashcardIndex;
 
     public void initialize()
     {
+        this.user = User.getInstance();
+        Flashcard flashcard = this.user.getFlashcards().get(flashcardIndex);
+        this.frontInput.setText(flashcard.getFront());
+        this.backInput.setText(flashcard.getBack());
     }
 
-    public void updateFlashcard()
+    public static void setFlashcardIndex(int flashcardIndex)
     {
-        UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.USE_EXISTING_FILE);
-        userDataWriter.updateFlashcard(this.titleInput.getText(), this.descriptionInput.getText());
+        UpdateFlashcardController.flashcardIndex = flashcardIndex;
     }
 
+    public void updateFlashcard(MouseEvent mouseEvent)
+    {
+        this.user.getFlashcards().get(flashcardIndex).setFront(this.frontInput.getText());
+        this.user.getFlashcards().get(flashcardIndex).setBack(this.backInput.getText());
+        Database.getInstance().updateFlashcard(this.user.getFlashcards().get(flashcardIndex));
+        closeCurrentScene(mouseEvent);
+    }
 }

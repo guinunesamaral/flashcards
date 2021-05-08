@@ -1,6 +1,5 @@
 package controllers;
 
-import database.UserDataReader;
 import javafx.animation.RotateTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,16 +8,18 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import utilities.Flashcard;
 import utilities.Score;
+import utilities.User;
 
 import java.util.ArrayList;
 
 /*
  * TODO: When I sort the index number of the flashcard, I must guarantee that it isn't
  *  a repeated number
- * TODO: The score must be updated in the study scene and in the home scene as well
+ * TODO: The flashcardBox has a limited number of flashcards, so the study must end according
+ *  to the number of flashcards. For now, the study never ends
  * */
 
-public class StudyController extends Controller
+public class StudyAllFlashcardsController extends Controller
 {
     public Pane flashcardPane;
     public Label flashcardFront;
@@ -32,15 +33,14 @@ public class StudyController extends Controller
 
     public void initialize()
     {
-        UserDataReader userDataReader = new UserDataReader();
-        this.flashcards = userDataReader.getFlashcards();
+        this.flashcards = User.getInstance().getFlashcards();
         this.flashcardsLength = this.flashcards.size() - 1;
         setFlashcard(sortFlashcard());
     }
 
     public void nextFlashcard()
     {
-        int index = this.currentFlashcard.index + 1;
+        int index = this.flashcards.indexOf(this.currentFlashcard) + 1;
         if (index > this.flashcardsLength) {
             index = 0;
         }
@@ -50,7 +50,7 @@ public class StudyController extends Controller
 
     public void previousFlashcard()
     {
-        int index = this.currentFlashcard.index - 1;
+        int index = this.flashcards.indexOf(this.currentFlashcard) - 1;
         if (index < 0) {
             index = this.flashcardsLength;
         }
@@ -61,8 +61,8 @@ public class StudyController extends Controller
     public void setFlashcard(int index)
     {
         this.currentFlashcard = this.flashcards.get(index);
-        this.flashcardFront.setText(this.currentFlashcard.front);
-        this.flashcardBack.setText(this.currentFlashcard.back);
+        this.flashcardFront.setText(this.currentFlashcard.getFront());
+        this.flashcardBack.setText(this.currentFlashcard.getBack());
         showFlashcardFront();
     }
 
@@ -72,8 +72,8 @@ public class StudyController extends Controller
             this.flashcardFront.visibleProperty().set(true);
             this.flashcardBack.visibleProperty().set(false);
         }
-        if (this.showBtn.getText().equals("Show back")) {
-            this.showBtn.setText("Show front");
+        if (this.showBtn.getText().equals("Show front")) {
+            this.showBtn.setText("Show back");
             easyBtn.setVisible(false);
             hardBtn.setVisible(false);
         }
@@ -135,13 +135,13 @@ public class StudyController extends Controller
         if (flashcardFront.visibleProperty().get()) {
             flashcardFront.visibleProperty().set(false);
             flashcardBack.visibleProperty().set(true);
-            showBtn.setText("Show back");
+            showBtn.setText("Show front");
             easyBtn.setVisible(true);
             hardBtn.setVisible(true);
         } else {
             flashcardFront.visibleProperty().set(true);
             flashcardBack.visibleProperty().set(false);
-            showBtn.setText("Show front");
+            showBtn.setText("Show back");
             easyBtn.setVisible(false);
             hardBtn.setVisible(false);
         }

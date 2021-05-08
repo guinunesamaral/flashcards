@@ -1,33 +1,31 @@
 package controllers;
 
-import database.UserDataWriter;
-import database.WriterOptions;
-import javafx.scene.Node;
+import database.Database;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import org.bson.types.ObjectId;
-import org.w3c.dom.Element;
+import utilities.Flashcard;
+import utilities.User;
+
+import java.util.ArrayList;
 
 public class AddFlashcardController extends Controller
 {
-    public TextField titleInput;
-    public TextArea descriptionInput;
+    public TextField frontInput;
+    public TextArea backInput;
 
     public void addFlashcard(MouseEvent mouseEvent)
     {
-        UserDataWriter userDataWriter = new UserDataWriter(WriterOptions.USE_EXISTING_FILE);
-        ObjectId objectId = new ObjectId();
+        ArrayList<ObjectId> users = new ArrayList<>();
+        users.add(User.getInstance().getId());
 
-        Element flashcard = userDataWriter.createElement("flashcard");
-        Element flashcardId = userDataWriter.createElement("_id", objectId.toString());
-        Element flashcardTitle = userDataWriter.createElement("title", titleInput.getText());
-        Element flashcardDescription = userDataWriter.createElement("description", descriptionInput.getText());
-
-        userDataWriter.addFlashcard(flashcard, flashcardId, flashcardTitle, flashcardDescription);
-
-        Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        window.close();
+        Flashcard flashcard = new Flashcard(new ObjectId(),
+                users,
+                this.frontInput.getText(),
+                this.backInput.getText());
+        User.getInstance().addFlashcard(flashcard);
+        Database.getInstance().addFlashcard(flashcard);
+        closeCurrentScene(mouseEvent);
     }
 }
