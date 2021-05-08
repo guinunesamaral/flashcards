@@ -10,11 +10,12 @@ public class App extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        FXMLLoader loginFXML = new FXMLLoader(Paths.get("./src/main/resources/scenes/home.fxml").toUri().toURL());
-        Scene loginScene = new Scene(loginFXML.load());
+        FXMLLoader loader = new FXMLLoader(Paths.get("./src/main/resources/scenes/home.fxml").toUri().toURL());
+        Scene homeScene = new Scene(loader.load());
 
         stage.setTitle("Flashcards");
-        stage.setScene(loginScene);
+        stage.setScene(homeScene);
+        stage.setResizable(false);
         stage.show();
     }
 
