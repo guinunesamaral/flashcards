@@ -3,11 +3,12 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="412.0" prefWidth="424.0" styleClass="container" stylesheets="@../styles/sign-in.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignInController">
-    <AnchorPane layoutX="19.0" layoutY="23.0" minWidth="-Infinity" prefHeight="50.0" prefWidth="376.0">
+    <AnchorPane layoutX="14.0" layoutY="14.0" minWidth="-Infinity" prefHeight="50.0" prefWidth="376.0">
         <Label layoutY="10.0" text="Flashcards">
             <styleClass>
                 <String fx:value="header-title" />
@@ -16,11 +17,6 @@
     </AnchorPane>
     <AnchorPane layoutX="37.0" layoutY="99.0" prefHeight="267.0" prefWidth="351.0" styleClass="options-box">
         <TextField fx:id="emailInput" layoutX="27.0" layoutY="39.0" prefHeight="28.0" prefWidth="195.0">
-            <styleClass>
-                <String fx:value="input" />
-            </styleClass>
-        </TextField>
-        <TextField fx:id="passwordInput" layoutX="26.0" layoutY="109.0" prefHeight="25.0" prefWidth="195.0">
             <styleClass>
                 <String fx:value="input" />
             </styleClass>
@@ -45,5 +41,6 @@
         </Button>
         <Label layoutX="26.0" layoutY="14.0" text="Email:" />
         <Label layoutX="26.0" layoutY="84.0" text="Password:" />
+      <PasswordField fx:id="passwordInput" layoutX="27.0" layoutY="109.0" styleClass="input" />
     </AnchorPane>
 </AnchorPane>

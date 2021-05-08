@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane prefHeight="341.0" prefWidth="497.0" styleClass="container" stylesheets="@../styles/study.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StudyController">
-    <AnchorPane layoutX="23.0" layoutY="8.0" minWidth="-Infinity" prefHeight="50.0" prefWidth="367.0">
+<AnchorPane prefHeight="341.0" prefWidth="497.0" styleClass="container" stylesheets="@../styles/study.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StudyAllFlashcardsController">
+    <AnchorPane layoutX="14.0" layoutY="14.0" minWidth="-Infinity" prefHeight="50.0" prefWidth="367.0">
         <Label layoutY="10.0" text="Flashcards">
             <styleClass>
                 <String fx:value="header-title" />
