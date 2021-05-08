@@ -1,4 +1,4 @@
-package database;
+package userdata;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -91,38 +91,36 @@ public class UserDataWriter
         updateUserDataFile();
     }
 
-    public void removeFlashcard(String flashcardId)
+    public void removeFlashcard(int flashcardIndex)
     {
-        Element flashcards = (Element) this.userDataDocument.getElementsByTagName("flashcards").item(0);
         UserDataReader userDataReader = new UserDataReader();
-        Element flashcard = userDataReader.findFlashcard(flashcards, flashcardId);
+        Element flashcard = userDataReader.findFlashcard(flashcardIndex);
         if (flashcard != null) {
-            flashcards.removeChild(flashcard);
+            userDataReader.flashcards.removeChild(flashcard);
             updateUserDataFile();
         }
     }
 
-    public void updateFlashcard(String flashcardFront, String flashcardBack)
-    {
-        Element flashcards = (Element) this.userDataDocument.getElementsByTagName("flashcards").item(0);
-        UserDataReader userDataReader = new UserDataReader();
-        Element flashcard = userDataReader.findFlashcard(flashcards, userDataReader.getFlashcardId());
-        boolean flashcardChanged = false;
-
-        if (flashcard != null) {
-            if (!flashcardFront.equals("")) {
-                flashcard.getElementsByTagName("front").item(0).setTextContent(flashcardFront);
-                flashcardChanged = true;
-            }
-            if (!flashcardBack.equals("")) {
-                flashcard.getElementsByTagName("back").item(0).setTextContent(flashcardBack);
-                flashcardChanged = true;
-            }
-        }
-        if (flashcardChanged) {
-            updateUserDataFile();
-        }
-    }
+//    public void updateFlashcard(String flashcardId, String flashcardFront, String flashcardBack)
+//    {
+//        UserDataReader userDataReader = new UserDataReader();
+//        Element flashcard = userDataReader.findFlashcard(flashcardIndex);
+//        boolean flashcardChanged = false;
+//
+//        if (flashcard != null) {
+//            if (!flashcardFront.equals("")) {
+//                flashcard.getElementsByTagName("front").item(0).setTextContent(flashcardFront);
+//                flashcardChanged = true;
+//            }
+//            if (!flashcardBack.equals("")) {
+//                flashcard.getElementsByTagName("back").item(0).setTextContent(flashcardBack);
+//                flashcardChanged = true;
+//            }
+//        }
+//        if (flashcardChanged) {
+//            updateUserDataFile();
+//        }
+//    }
 
     private void updateUserDataFile()
     {

@@ -1,4 +1,4 @@
-package database;
+package userdata;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,7 +18,7 @@ public class UserDataReader
     public static final String USER_DATA = "./src/main/java/userdata/user-data.xml";
     public Document userDataDocument;
     public Node userDataRootNode;
-    public ArrayList<Flashcard> flashcards;
+    public Element flashcards;
     private static String flashcardId;
 
     public UserDataReader()
@@ -51,23 +51,8 @@ public class UserDataReader
         return (Element) this.userDataDocument.getElementsByTagName(tagName).item(index);
     }
 
-    public void setFlashcards()
+    public Element findFlashcard(int index)
     {
-        this.flashcards = new ArrayList<>();
-        Element flashcardsElement = getTagElements( "flashcards", 0);
-        int numberOfFlashcards = flashcardsElement.getElementsByTagName("flashcard").getLength();
-
-        for (int index = 0; index < numberOfFlashcards; index++)
-        {
-            String id = getTagElements("_id", index).getTextContent();
-            String front = getTagElements("front", index).getTextContent();
-            String back = getTagElements("back", index).getTextContent();
-            flashcards.add(new Flashcard(id, front, back, index));
-        }
-    }
-
-    public Flashcard findFlashcard(int index)
-    {
-        return this.flashcards.get(index);
+        return (Element) this.flashcards.getElementsByTagName("_id").item(index);
     }
 }

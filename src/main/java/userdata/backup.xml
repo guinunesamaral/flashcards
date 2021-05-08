@@ -7,48 +7,18 @@
     <flashcards>
         <flashcard>
             <_id>606f7294499a6f2f240c1f71</_id>
-            <title>First flashcard</title>
-            <description>Just a random flashcard</description>
+            <front>Plant Extracellular matrix:</front>
+            <back>cell wall is a type of ECM secreted by plants</back>
         </flashcard>
         <flashcard>
             <_id>606f732b499a6f2f240c1f73</_id>
-            <title>Second flashcard</title>
-            <description>Another random flashcard</description>
+            <front>adherens junction</front>
+            <back>joins an actin bundle in one cell to a similar bundle in a neighboring cell</back>
         </flashcard>
         <flashcard>
-            <_id>6074e57b88a9ac472f16340b</_id>
-            <title>Third flashcard</title>
-            <description>An useless flashcard</description>
-        </flashcard>
-        <flashcard>
-            <_id>606f7294499a6f2f240c1f76</_id>
-            <title>Fourth flashcard</title>
-            <description>Just a random flashcard</description>
-        </flashcard>
-        <flashcard>
-            <_id>606f732b499a6f2f240c1f7k</_id>
-            <title>Fifth flashcard</title>
-            <description>Another random flashcard</description>
-        </flashcard>
-        <flashcard>
-            <_id>6074e57b88a9ac472f16340n</_id>
-            <title>Sixth flashcard</title>
-            <description>An useless flashcard</description>
-        </flashcard>
-        <flashcard>
-            <_id>606f7294499a6f2f240c1f7d</_id>
-            <title>Seventh flashcard</title>
-            <description>Just a random flashcard</description>
-        </flashcard>
-        <flashcard>
-            <_id>606f732b499a6f2f240c1f7r</_id>
-            <title>Eighth flashcard</title>
-            <description>Another random flashcard</description>
-        </flashcard>
-        <flashcard>
-            <_id>6074e57b88a9ac472f16340t</_id>
-            <title>Ninth flashcard</title>
-            <description>An useless flashcard</description>
+            <_id>608dbf87327cfd1b23d266c4</_id>
+            <front>what do microtubules direct?</front>
+            <back>the deposition of cellulose</back>
         </flashcard>
     </flashcards>
 </user>
