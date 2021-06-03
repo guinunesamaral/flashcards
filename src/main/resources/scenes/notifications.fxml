@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane prefHeight="390.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NotificationsController">
-    <ScrollPane hbarPolicy="NEVER" prefHeight="394.0" prefWidth="673.0" style="-fx-background: black;">
-        <FlowPane fx:id="flashcardBox" prefHeight="384.0" prefWidth="671.0" />
+<AnchorPane prefHeight="507.0" prefWidth="684.0" styleClass="window" stylesheets="@../styles/notifications.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NotificationsController">
+    <AnchorPane layoutX="14.0" layoutY="14.0" minWidth="-Infinity" prefHeight="50.0" prefWidth="376.0">
+        <Label layoutY="10.0" text="Flashcards">
+            <styleClass>
+                <String fx:value="header-title" />
+            </styleClass>
+        </Label>
+    </AnchorPane>
+    <ScrollPane hbarPolicy="NEVER" layoutX="18.0" layoutY="68.0" prefHeight="418.0" prefWidth="648.0" style="-fx-background: black;">
+        <FlowPane fx:id="flashcardBox" prefHeight="417.0" prefWidth="646.0" />
     </ScrollPane>
 </AnchorPane>

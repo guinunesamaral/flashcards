@@ -6,10 +6,9 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.Pane?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="708.0" styleClass="App" stylesheets="@../styles/home.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
-    <AnchorPane layoutX="19.0" layoutY="23.0" minWidth="-Infinity" prefHeight="50.0" prefWidth="671.0">
+    <AnchorPane layoutX="19.0" layoutY="23.0" minWidth="-Infinity" prefHeight="50.0" prefWidth="674.0">
         <Label layoutY="10.0" text="Flashcards">
             <styleClass>
                 <String fx:value="header-title" />
@@ -36,40 +35,36 @@
             </Button>
         </AnchorPane>
     </AnchorPane>
-    <AnchorPane layoutX="19.0" layoutY="127.0" minWidth="-Infinity" prefHeight="54.0" prefWidth="671.0">
+    <AnchorPane layoutX="19.0" layoutY="127.0" minWidth="-Infinity" prefHeight="54.0" prefWidth="674.0">
         <AnchorPane layoutY="15.0">
             <Label text="Hard:" />
             <Label fx:id="hardScoreValue" layoutX="49.0" layoutY="1.0" text="0" />
         </AnchorPane>
-        <AnchorPane layoutX="344.0" layoutY="11.0" prefHeight="35.0" prefWidth="327.0">
-            <Button mnemonicParsing="false" onMouseClicked="#openStudyAllFlashcardsScene" text="Study all flashcards">
+      <AnchorPane layoutX="75.0" layoutY="15.0" prefHeight="26.0" prefWidth="58.0">
+         <children>
+               <Label text="Easy:" />
+         </children>
+      </AnchorPane>
+        <AnchorPane layoutX="566.0" layoutY="9.0" prefHeight="36.0" prefWidth="97.0">
+            <Button mnemonicParsing="false" onMouseClicked="#openStudyScene" text="Study">
                 <styleClass>
                     <String fx:value="study-btn" />
                     <String fx:value="btn" />
                 </styleClass>
             </Button>
-            <Button layoutX="164.0" mnemonicParsing="false" onMouseClicked="#openStudyOneFlashcardScene" text="Sort flashcard">
-                <styleClass>
-                    <String fx:value="sort-flashcard-btn" />
-                    <String fx:value="btn" />
-                </styleClass>
-            </Button>
-            <Button layoutX="291.0" mnemonicParsing="false" onMouseClicked="#openAddFlashcardScene" prefHeight="25.0" prefWidth="36.0">
+            <Button layoutX="71.0" mnemonicParsing="false" onMouseClicked="#openAddFlashcardScene" prefHeight="25.0" prefWidth="36.0">
                 <styleClass>
                     <String fx:value="add-flashcard-btn" />
                     <String fx:value="btn" />
                 </styleClass>
             </Button>
         </AnchorPane>
-        <Pane layoutX="75.0" layoutY="11.0" prefHeight="35.0" prefWidth="75.0">
-            <Label layoutY="5.0" text="Easy:" />
-            <Label fx:id="easyScoreValue" layoutX="49.0" layoutY="6.0" text="0" />
-        </Pane>
-      <Button layoutX="261.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#refreshScene" style="-fx-text-fill: black-1;" text="Refresh">
-         <styleClass>
-            <String fx:value="btn" />
-            <String fx:value="refresh-btn" />
-         </styleClass></Button>
+         <Label fx:id="easyScoreValue" layoutX="119.0" layoutY="16.0" prefHeight="25.0" prefWidth="9.0" text="0" />
+<!--      <Button layoutX="261.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#refreshScene" style="-fx-text-fill: black-1;" text="Refresh">-->
+<!--         <styleClass>-->
+<!--            <String fx:value="btn" />-->
+<!--            <String fx:value="refresh-btn" />-->
+<!--         </styleClass></Button>-->
     </AnchorPane>
     <ScrollPane hbarPolicy="NEVER" layoutX="19.0" layoutY="202.0" style="-fx-background: black;">
         <FlowPane fx:id="flashcardBox" prefHeight="384.0" prefWidth="671.0" />
