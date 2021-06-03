@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
-<FlowPane alignment="TOP_RIGHT" prefHeight="178.0" prefWidth="248.0" styleClass="flashcard-wrapper" stylesheets="@../styles/receive-flashcard.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReceiveFlashcardController">
+<FlowPane alignment="TOP_RIGHT" prefHeight="178.0" prefWidth="248.0" styleClass="flashcard-wrapper" stylesheets="@../styles/received-flashcard.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReceivedFlashcardController">
     <AnchorPane fx:id="flashcardAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#flipFlashcard" prefHeight="158.0" prefWidth="228.0">
         <Pane prefHeight="158.0" prefWidth="228.0">
             <Label fx:id="flashcardBack" alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="151.0" prefWidth="214.0" styleClass="flashcard-back" text="Label" visible="false" wrapText="true" />
