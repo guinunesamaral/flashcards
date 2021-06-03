@@ -36,6 +36,13 @@ public class StudyAllFlashcardsController extends Controller
         this.flashcards = User.getInstance().getFlashcards();
         this.flashcardsLength = this.flashcards.size() - 1;
         setFlashcard(sortFlashcard());
+        resetScore();
+    }
+
+    public void resetScore()
+    {
+        Score.easy = 0;
+        Score.hard = 0;
     }
 
     public void nextFlashcard()
