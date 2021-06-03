@@ -1,0 +1,13 @@
+@import "./reset.css";
+
+.window {
+    -fx-background-color: black;
+}
+
+/*.accept-all-btn {*/
+/*    -fx-background-color: blue-1;*/
+/*}*/
+
+/*.refuse-all-btn {*/
+/*    -fx-background-color: red-1;*/
+/*}*/
