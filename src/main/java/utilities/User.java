@@ -78,6 +78,11 @@ public class User
         return flashcards;
     }
 
+    public void removeAllFlashcards()
+    {
+        flashcards = new ArrayList<>();
+    }
+
     public ArrayList<Flashcard> getReceivedFlashcards()
     {
         return receivedFlashcards;
