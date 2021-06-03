@@ -78,17 +78,20 @@ public class ExpandedFlashcardController extends Controller
         Database.getInstance().removeFlashcard(this.user.getFlashcards().get(flashcardIndex));
         this.user.getFlashcards().remove(flashcardIndex);
         closeCurrentScene(mouseEvent);
+        updateHomeScene();
     }
 
-    public void openShareFlashcardScene()
+    public void openShareFlashcardScene(MouseEvent mouseEvent)
     {
         ShareFlashcardController.setFlashcardIndex(flashcardIndex);
-        openSceneAndWait(SHARE_FLASHCARD_SCENE, "Share");
+        openScene(SHARE_FLASHCARD_SCENE, "Share");
+        closeCurrentScene(mouseEvent);
     }
 
-    public void openUpdateFlashcardScene()
+    public void openUpdateFlashcardScene(MouseEvent mouseEvent)
     {
         UpdateFlashcardController.setFlashcardIndex(flashcardIndex);
-        openSceneAndWait(UPDATE_FLASHCARD_SCENE, "Update");
+        openScene(UPDATE_FLASHCARD_SCENE, "Update");
+        closeCurrentScene(mouseEvent);
     }
 }

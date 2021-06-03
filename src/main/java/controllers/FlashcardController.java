@@ -21,14 +21,10 @@ public class FlashcardController extends Controller
         this.user = User.getInstance();
     }
 
-    public void setFlashcardIndex(int flashcardIndex)
+    public void setFlashcardProperties(int flashcardIndex)
     {
         this.flashcardIndex = flashcardIndex;
-    }
-
-    public void setFlashcardProperties()
-    {
-        Flashcard flashcard = this.user.getFlashcards().get(flashcardIndex);
+        Flashcard flashcard = this.user.getFlashcards().get(this.flashcardIndex);
         this.flashcardFront.setText(flashcard.getFront());
     }
 
@@ -42,6 +38,6 @@ public class FlashcardController extends Controller
         } catch (IOException e) {
             e.printStackTrace();
         }
-        openSceneAndWait(EXPANDED_FLASHCARD_SCENE, "Flashcard");
+        openScene(EXPANDED_FLASHCARD_SCENE, "Flashcard");
     }
 }

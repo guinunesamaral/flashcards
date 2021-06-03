@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -10,12 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-/*
- * TODO: To fix the problem of openSceneAndWait is simple, it only the method to return a boolean
- *  value, that will only be returned when the new stage is closed. It means that the refresh button
- *  can be discarded
- * */
-
 public class Controller
 {
     public static final String SIGN_IN_SCENE = "./src/main/resources/scenes/sign-in.fxml";
@@ -23,11 +18,10 @@ public class Controller
     public static final String REDEFINE_PASSWORD_SCENE = "./src/main/resources/scenes/redefine-password.fxml";
     public static final String HOME_SCENE = "./src/main/resources/scenes/home.fxml";
     public static final String NOTIFICATIONS_SCENE = "./src/main/resources/scenes/notifications.fxml";
-    public static final String STUDY_ALL_FLASHCARDS_SCENE = "./src/main/resources/scenes/study-all-flashcards.fxml";
-    public static final String STUDY_ONE_FLASHCARD_SCENE = "./src/main/resources/scenes/study-one-flashcard.fxml";
+    public static final String STUDY_SCENE = "./src/main/resources/scenes/study.fxml";
     public static final String ADD_FLASHCARD_SCENE = "./src/main/resources/scenes/add-flashcard.fxml";
     public static final String FLASHCARD = "./src/main/resources/components/flashcard.fxml";
-    public static final String RECEIVE_FLASHCARD = "./src/main/resources/components/receive-flashcard.fxml";
+    public static final String RECEIVED_FLASHCARD = "./src/main/resources/components/received-flashcard.fxml";
     public static final String EXPANDED_FLASHCARD_SCENE = "./src/main/resources/components/expanded-flashcard.fxml";
     public static final String SHARE_FLASHCARD_SCENE = "./src/main/resources/scenes/share-flashcard.fxml";
     public static final String UPDATE_FLASHCARD_SCENE = "./src/main/resources/scenes/update-flashcard.fxml";
@@ -45,8 +39,7 @@ public class Controller
         }
     }
 
-    public void openSceneAndWait(String sceneFxmlPath,
-                                 String stageTitle)
+    public Stage openScene(String sceneFxmlPath, String stageTitle)
     {
         try {
             Stage stage = new Stage();
@@ -56,8 +49,10 @@ public class Controller
             stage.setTitle(stageTitle);
             stage.setResizable(false);
             stage.show();
+            return stage;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -65,5 +60,18 @@ public class Controller
     {
         Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         window.close();
+    }
+
+    public void updateHomeScene()
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader(Paths.get(HOME_SCENE).toUri().toURL());
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

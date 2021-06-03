@@ -3,6 +3,7 @@ package controllers;
 import javafx.animation.RotateTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  *  to the number of flashcards. For now, the study never ends
  * */
 
-public class StudyAllFlashcardsController extends Controller
+public class StudyController extends Controller
 {
     public Pane flashcardPane;
     public Label flashcardFront;
@@ -28,13 +29,12 @@ public class StudyAllFlashcardsController extends Controller
     public Button easyBtn;
     public Button hardBtn;
     public ArrayList<Flashcard> flashcards;
-    public int flashcardsLength;
     public Flashcard currentFlashcard;
 
     public void initialize()
     {
-        this.flashcards = User.getInstance().getFlashcards();
-        this.flashcardsLength = this.flashcards.size() - 1;
+        this.flashcards = new ArrayList<>();
+        this.flashcards.addAll(User.getInstance().getFlashcards());
         setFlashcard(sortFlashcard());
         resetScore();
     }
@@ -43,34 +43,6 @@ public class StudyAllFlashcardsController extends Controller
     {
         Score.easy = 0;
         Score.hard = 0;
-    }
-
-    public void nextFlashcard()
-    {
-        int index = this.flashcards.indexOf(this.currentFlashcard) + 1;
-        if (index > this.flashcardsLength) {
-            index = 0;
-        }
-        resetFlashcard();
-        setFlashcard(index);
-    }
-
-    public void previousFlashcard()
-    {
-        int index = this.flashcards.indexOf(this.currentFlashcard) - 1;
-        if (index < 0) {
-            index = this.flashcardsLength;
-        }
-        resetFlashcard();
-        setFlashcard(index);
-    }
-
-    public void setFlashcard(int index)
-    {
-        this.currentFlashcard = this.flashcards.get(index);
-        this.flashcardFront.setText(this.currentFlashcard.getFront());
-        this.flashcardBack.setText(this.currentFlashcard.getBack());
-        showFlashcardFront();
     }
 
     public void resetFlashcard()
@@ -100,19 +72,39 @@ public class StudyAllFlashcardsController extends Controller
 
     public int sortFlashcard()
     {
-        return (int) (Math.random() * (this.flashcardsLength + 1));
+        int nbrOfFlashcards = this.flashcards.size();
+        return (int) (Math.random() * (nbrOfFlashcards));
     }
 
-    public void updateEasyScore()
+    public void setFlashcard(int index)
+    {
+        this.currentFlashcard = this.flashcards.get(index);
+        this.flashcards.remove(index);
+        this.flashcardFront.setText(this.currentFlashcard.getFront());
+        this.flashcardBack.setText(this.currentFlashcard.getBack());
+        showFlashcardFront();
+    }
+
+    public void updateEasyScore(MouseEvent mouseEvent)
     {
         Score.easy += 1;
-        nextFlashcard();
+        resetFlashcard();
+        setFlashcard(sortFlashcard());
+        if (this.flashcards.size() == 0) {
+            updateHomeScene();
+            closeCurrentScene(mouseEvent);
+        }
     }
 
-    public void updateHardScore()
+    public void updateHardScore(MouseEvent mouseEvent)
     {
         Score.hard += 1;
-        nextFlashcard();
+        resetFlashcard();
+        setFlashcard(sortFlashcard());
+        if (this.flashcards.size() == 0) {
+            updateHomeScene();
+            closeCurrentScene(mouseEvent);
+        }
     }
 
     public void flipFlashcard()

@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import utilities.Flashcard;
 import utilities.User;
 
-public class ReceiveFlashcardController extends Controller
+public class ReceivedFlashcardController extends Controller
 {
     public AnchorPane flashcardAnchorPane;
     public Label flashcardFront;
@@ -23,7 +23,7 @@ public class ReceiveFlashcardController extends Controller
 
     public void setFlashcardProperties(int flashcardIndex)
     {
-        ReceiveFlashcardController.flashcardIndex = flashcardIndex;
+        ReceivedFlashcardController.flashcardIndex = flashcardIndex;
         Flashcard flashcard = this.user.getFlashcards().get(flashcardIndex);
         this.flashcardFront.setText(flashcard.getFront());
         this.flashcardBack.setText(flashcard.getBack());
@@ -43,10 +43,5 @@ public class ReceiveFlashcardController extends Controller
     public void refuseFlashcard()
     {
         Database.getInstance().refuseFlashcard(flashcardIndex);
-    }
-
-    public void accepAllFlashcards()
-    {
-
     }
 }
