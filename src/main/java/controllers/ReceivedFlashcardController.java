@@ -1,12 +1,13 @@
 package controllers;
 
+import database.Database;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import utilities.Flashcard;
 import utilities.User;
 
-public class ReceiveFlashcardController extends Controller
+public class ReceivedFlashcardController extends Controller
 {
     public AnchorPane flashcardAnchorPane;
     public Label flashcardFront;
@@ -18,16 +19,11 @@ public class ReceiveFlashcardController extends Controller
     public void initialize()
     {
         this.user = User.getInstance();
-        setFlashcardProperties();
     }
 
-    public void setFlashcardIndex(int flashcardIndex)
+    public void setFlashcardProperties(int flashcardIndex)
     {
-        ReceiveFlashcardController.flashcardIndex = flashcardIndex;
-    }
-
-    public void setFlashcardProperties()
-    {
+        ReceivedFlashcardController.flashcardIndex = flashcardIndex;
         Flashcard flashcard = this.user.getFlashcards().get(flashcardIndex);
         this.flashcardFront.setText(flashcard.getFront());
         this.flashcardBack.setText(flashcard.getBack());
@@ -36,14 +32,16 @@ public class ReceiveFlashcardController extends Controller
     public void flipFlashcard()
     {
         ExpandedFlashcardController
-                .flip(flashcardAnchorPane, this.flashcardFront, this.flashcardBack, this.flashcardToolBar);
-    }
-
-    public void refuseFlashcard()
-    {
+                .flip(this.flashcardAnchorPane, this.flashcardFront, this.flashcardBack, this.flashcardToolBar);
     }
 
     public void acceptFlashcard()
     {
+        Database.getInstance().acceptFlashcard(flashcardIndex);
+    }
+
+    public void refuseFlashcard()
+    {
+        Database.getInstance().refuseFlashcard(flashcardIndex);
     }
 }

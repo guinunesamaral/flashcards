@@ -26,10 +26,10 @@ public class NotificationsController extends Controller
         int flashcardsLength = flashcards.size() - 1;
         for (int flashcardIndex = 0; flashcardIndex <= flashcardsLength; flashcardIndex++) {
             try {
-                FXMLLoader loader = new FXMLLoader(Paths.get(FLASHCARD).toUri().toURL());
+                FXMLLoader loader = new FXMLLoader(Paths.get(RECEIVED_FLASHCARD).toUri().toURL());
                 FlowPane flashcardFxml = loader.load();
-                ReceiveFlashcardController receiveFlashcardController = loader.getController();
-                receiveFlashcardController.setFlashcardIndex(flashcardIndex);
+                ReceivedFlashcardController receivedFlashcardController = loader.getController();
+                receivedFlashcardController.setFlashcardProperties(flashcardIndex);
                 this.flashcardBox.getChildren().add(flashcardFxml);
             } catch (IOException e) {
                 e.printStackTrace();

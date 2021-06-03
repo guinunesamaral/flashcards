@@ -17,7 +17,7 @@
             <String fx:value="front-bg" />
         </styleClass>
     </AnchorPane>
-   <cursor>
-      <Cursor fx:constant="HAND" />
-   </cursor>
+    <cursor>
+        <Cursor fx:constant="HAND" />
+    </cursor>
 </FlowPane>

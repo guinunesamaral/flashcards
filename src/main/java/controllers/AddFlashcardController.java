@@ -26,6 +26,8 @@ public class AddFlashcardController extends Controller
                 this.backInput.getText());
         User.getInstance().addFlashcard(flashcard);
         Database.getInstance().addFlashcard(flashcard);
+
+        updateHomeScene();
         closeCurrentScene(mouseEvent);
     }
 }

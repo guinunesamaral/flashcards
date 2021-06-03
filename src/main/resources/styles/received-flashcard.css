@@ -1,0 +1,74 @@
+@import "./reset.css";
+
+.header-title {
+    -fx-text-fill: grey-1;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: inherit;
+}
+
+.btn {
+    -fx-cursor: hand;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-pref-height: 35px;
+}
+
+.flashcard-wrapper {
+    -fx-padding: 10px;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+}
+
+.flashcard {
+    -fx-end-margin: 20px;
+    -fx-border-radius: 3px;
+    -fx-border-color: #C7C3C3;
+    -fx-background-radius: 3px;
+    -fx-background-color: #C7C3C3;
+}
+
+.flashcard-front {
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-background-color: inherit;
+}
+
+.flashcard-back {
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-vgap: 30px;
+    -fx-background-color: inherit;
+}
+
+.front-bg {
+    -fx-background-color: #C7C3C3;
+}
+
+.back-bg {
+    -fx-background-color: black;
+}
+
+.flashcard-tool-bar {
+    -fx-background-color: inherit;
+}
+
+.flashcard-btn {
+    -fx-background-color: inherit;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 85%;
+}
+
+.accept-btn {
+    -fx-background-image: url("../images/confirm.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 85%;
+}
+
+.refuse-btn {
+    -fx-background-image: url("../images/remove.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 85%;
+}

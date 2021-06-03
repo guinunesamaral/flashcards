@@ -32,6 +32,8 @@ public class UpdateFlashcardController extends Controller
         this.user.getFlashcards().get(flashcardIndex).setFront(this.frontInput.getText());
         this.user.getFlashcards().get(flashcardIndex).setBack(this.backInput.getText());
         Database.getInstance().updateFlashcard(this.user.getFlashcards().get(flashcardIndex));
+
         closeCurrentScene(mouseEvent);
+        updateHomeScene();
     }
 }

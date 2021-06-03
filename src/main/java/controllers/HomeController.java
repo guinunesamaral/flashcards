@@ -1,11 +1,11 @@
 package controllers;
 
-import database.Database;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 import utilities.Flashcard;
 import utilities.Score;
 import utilities.User;
@@ -23,16 +23,9 @@ public class HomeController extends Controller
 
     public void initialize()
     {
-        Database.getInstance().signIn("guinucode@gmail.com", "123456");
-        fetchFlashcards();
-        checkNotifications();
-    }
-
-    public void refreshScene()
-    {
-        removeFlashcardsFromBox();
         fetchFlashcards();
         updateScore();
+        checkNotifications();
     }
 
     public void signOut(MouseEvent mouseEvent)
@@ -53,13 +46,6 @@ public class HomeController extends Controller
     {
         this.hardScoreValue.setText(String.valueOf(Score.hard));
         this.easyScoreValue.setText(String.valueOf(Score.easy));
-    }
-
-    public void removeFlashcardsFromBox()
-    {
-        if (this.flashcardBox.getChildren().size() > 0) {
-            this.flashcardBox.getChildren().removeAll(this.flashcardBox.getChildren());
-        }
     }
 
     public void checkNotifications()
@@ -85,7 +71,7 @@ public class HomeController extends Controller
                 FXMLLoader loader = new FXMLLoader(Paths.get(FLASHCARD).toUri().toURL());
                 FlowPane flashcardFxml = loader.load();
                 FlashcardController flashcardController = loader.getController();
-                flashcardController.setFlashcardIndex(flashcardIndex);
+                flashcardController.setFlashcardProperties(flashcardIndex);
                 this.flashcardBox.getChildren().add(flashcardFxml);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -95,21 +81,17 @@ public class HomeController extends Controller
 
     public void openNotificationsScene()
     {
-        openSceneAndWait(NOTIFICATIONS_SCENE, "Receive flashcard");
+        openScene(NOTIFICATIONS_SCENE, "Receive flashcard");
     }
 
     public void openAddFlashcardScene()
     {
-        openSceneAndWait(ADD_FLASHCARD_SCENE, "New flashcard");
+        openScene(ADD_FLASHCARD_SCENE, "New flashcard");
     }
 
-    public void openStudyAllFlashcardsScene()
+    public void openStudyScene()
     {
-        openSceneAndWait(STUDY_ALL_FLASHCARDS_SCENE, "Study");
-    }
-
-    public void openStudyOneFlashcardScene()
-    {
-        openSceneAndWait(STUDY_ONE_FLASHCARD_SCENE, "Study");
+        Stage stage = openScene(STUDY_SCENE, "Study");
+        stage.setOnCloseRequest(windowEvent -> updateHomeScene());
     }
 }
