@@ -275,8 +275,52 @@ public class Database
                 .collect(Collectors.toList());
     }
 
-    public void receiveFlashcard()
+    public void acceptFlashcard(int flashcardIndex)
     {
+        User user = User.getInstance();
+        Flashcard flashcard = user.getReceivedFlashcards().get(flashcardIndex);
 
+        Document userDocument = this.usersCollection.find(new Document("email",
+                User.getInstance().getEmail())).first();
+        if (userDocument != null) {
+            ArrayList<ObjectId> flashcardsIds = getFlashcardsIds(userDocument);
+            if (!flashcardsIds.contains(flashcard.getId())) {
+                flashcardsIds.add(flashcard.getId());
+                this.usersCollection.updateOne(new Document("email",
+                                User.getInstance().getEmail()),
+                        new Document("$set",
+                                new Document("flashcards",
+                                        flashcardsIds)));
+            }
+            ArrayList<ObjectId> receivedFlashcardsIds = getReceivedFlashcards(userDocument);
+            if (receivedFlashcardsIds.contains(flashcard.getId())) {
+                receivedFlashcardsIds.remove(flashcard.getId());
+                this.usersCollection.updateOne(new Document("email",
+                                User.getInstance().getEmail()),
+                        new Document("$set",
+                                new Document("received",
+                                        receivedFlashcardsIds)));
+            }
+        }
+    }
+
+    public void refuseFlashcard(int flashcardIndex)
+    {
+        User user = User.getInstance();
+        Flashcard flashcard = user.getReceivedFlashcards().get(flashcardIndex);
+
+        Document userDocument = this.usersCollection.find(new Document("email",
+                User.getInstance().getEmail())).first();
+        if (userDocument != null) {
+            ArrayList<ObjectId> receivedFlashcardsIds = getReceivedFlashcards(userDocument);
+            if (receivedFlashcardsIds.contains(flashcard.getId())) {
+                receivedFlashcardsIds.remove(flashcard.getId());
+                this.usersCollection.updateOne(new Document("email",
+                                User.getInstance().getEmail()),
+                        new Document("$set",
+                                new Document("received",
+                                        receivedFlashcardsIds)));
+            }
+        }
     }
 }
